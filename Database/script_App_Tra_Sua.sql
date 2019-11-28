@@ -1,0 +1,194 @@
+﻿CREATE DATABASE AppTraSua
+GO
+USE AppTraSua
+GO
+
+--drop table [USER]
+CREATE TABLE [USER](
+	[UserID] [int] NOT NULL,
+	[UserName] [varchar](25) NOT NULL,
+	[Password] [varchar](25) NOT NULL,
+	[isActive] [bit] NOT NULL,
+	[GroupID] [int] NULL,
+ CONSTRAINT [PK_USER_UserID] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)
+)
+GO
+--drop table [USERGROUP]
+CREATE TABLE [USERGROUP](
+	[GroupID] [int] NOT NULL,
+	[GroupName] [nvarchar](25) NULL,
+ CONSTRAINT [PK_USERGROUP_GroupID] PRIMARY KEY CLUSTERED 
+(
+	[GroupID] ASC
+)
+) 
+GO
+--drop table [n_SalesOrderDetail]
+CREATE TABLE [MENU](
+	--[ProductID] [int] NOT NULL,
+	[ID] [int] NOT NULL,
+	[Name] [nvarchar](25) NULL,
+	[isActive] [bit] NOT NULL,
+	[Price] [money] NOT NULL,
+	[GroupMenuID] [int] NULL,
+ CONSTRAINT [PK_MENU_ID] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)
+) 
+GO
+CREATE TABLE [GROUPMENU](
+	[GroupMenuID] [int] NOT NULL,
+	[GroupMenuName] [nvarchar](25) NULL,
+ CONSTRAINT [PK_GROUPMENU_GroupMenuID] PRIMARY KEY CLUSTERED 
+(
+	[GroupMenuID] ASC
+)
+) 
+GO
+--drop table [USERGROUP]
+CREATE TABLE [AREA](
+	[AreaID] [int] NOT NULL,
+	[Name] [nvarchar](25) NULL,
+ CONSTRAINT [PK_AREA_AreaID] PRIMARY KEY CLUSTERED 
+(
+	[AreaID] ASC
+)
+)
+GO
+--drop table [n_Customer]
+CREATE TABLE [TICKET](
+	[TicketID] [int] NOT NULL,
+	--[CustomerID] [int] NULL,
+	[TKDateIn] [datetime] NULL,
+	[TKDateOut] [datetime] NULL,
+	[AreaID] [int] NULL,
+	[TotalAmout] [money] NOT NULL,
+ CONSTRAINT [PK_TICKET_TicketID] PRIMARY KEY CLUSTERED 
+(
+	[TicketID] ASC
+)
+)
+GO
+--drop table [n_Customer]
+CREATE TABLE [TICKETDETAIL](
+	[TicketDetailID] [int] NOT NULL,
+	[TicketID] [int] NOT NULL,
+	[ProductID] [int] NOT NULL,
+	[Quantity] [int] NULL,
+	[TKDTotalAmout] [money] NOT NULL,
+ CONSTRAINT [PK_TICKETDETAIL_TicketDetailID_TicketID] PRIMARY KEY CLUSTERED 
+(
+	[TicketDetailID] ASC,
+	[TicketID] ASC
+)
+)
+GO
+/*--drop table [n_Customer]
+CREATE TABLE [Customer](
+	[CustomerID] [int] NOT NULL,
+	[UserName] [varchar](25) NOT NULL,
+	[Password] [varchar](25) NOT NULL,
+	[isActive] [bit] NOT NULL,
+	[Coin] [int] NULL,
+ CONSTRAINT [PK_Customer_CustomerID] PRIMARY KEY CLUSTERED 
+(
+	[CustomerID] ASC
+)
+)
+GO
+ALTER TABLE [USER]
+ADD CONSTRAINT FK_USER_USERGROUP
+FOREIGN KEY (GroupID)
+REFERENCES USERGROUP(GroupID)
+GO*/
+
+ALTER TABLE [USER]
+ADD CONSTRAINT FK_USER_USERGROUP
+FOREIGN KEY (GroupID)
+REFERENCES [USERGROUP](GroupID)
+GO
+ALTER TABLE [TICKET]
+ADD CONSTRAINT FK_TICKET_AREA
+FOREIGN KEY (AreaID)
+REFERENCES [AREA](AreaID)
+GO
+ALTER TABLE [TICKETDETAIL]
+ADD CONSTRAINT FK_TICKETDETAIL_TICKET
+FOREIGN KEY (TicketID)
+REFERENCES [TICKET](TicketID)
+GO
+ALTER TABLE [TICKETDETAIL]
+ADD CONSTRAINT FK_TICKETDETAIL_MENU
+FOREIGN KEY (ProductID)
+REFERENCES [MENU](ID)
+GO
+ALTER TABLE [MENU]
+ADD CONSTRAINT FK_MENU_GROUPMENU
+FOREIGN KEY (GroupMenuID)
+REFERENCES [GROUPMENU](GroupMenuID)
+GO
+
+--index
+CREATE NONCLUSTERED INDEX ProductName 
+	ON [MENU] ([ID] ASC, [Name] ASC)
+
+CREATE NONCLUSTERED INDEX ProductID_TicketDetail
+	ON [TICKETDETAIL] ([ProductID])
+
+CREATE NONCLUSTERED INDEX TicketID_TicketDetail
+	ON [TICKETDETAIL] ([TicketID])
+
+--Tìm kiếm hóa đơn theo ngày (từ ngày... đến ngày...)--
+CREATE FUNCTION fTimHoaDonTheoNgay (@TuNgay DATETIME, @DenNgay DATETIME)
+RETURNS table
+AS
+	return (SELECT * FROM TICKET WHERE (TKDateIn BETWEEN @TuNgay AND @DenNgay) OR (TKDateOut BETWEEN @TuNgay AND @DenNgay))
+GO
+--Không cho phép xóa hóa đơn--
+CREATE TRIGGER trgXoaHoaDon
+ON TICKETDETAIL
+FOR DELETE
+AS
+BEGIN
+	BEGIN
+		RAISERROR (N'LỖI: KHÔNG ĐƯỢC XÓA HÓA ĐƠN', 16, 1)
+		ROLLBACK
+	END
+END
+GO
+
+--nhập liệu
+INSERT dbo.[USERGROUP] VALUES (1, N'Quản lý')
+INSERT dbo.[USERGROUP] VALUES (2, N'Thu ngân')
+GO
+INSERT dbo.[USER] VALUES (1, 'thungan01', 'AXXXZZ1234-AZA', 1, 2)
+INSERT dbo.[USER] VALUES (2,'thungan02', 'AXXXZZ1234-AZA', 1, 2)
+INSERT dbo.[USER] VALUES (3,'QUANLY', 'AXXXZZ1234-AZA', 1, 1)
+GO
+INSERT dbo.[GROUPMENU] VALUES (1, N'Trà sữa')
+INSERT dbo.[GROUPMENU] VALUES (2, N'Cà phê')
+INSERT dbo.[GROUPMENU] VALUES (3, N'Trà trái cây')
+GO
+INSERT dbo.[MENU] VALUES (15, N'Trà sữa', 1, 30000, 1)
+INSERT dbo.[MENU] VALUES (25, N'Cà phê', 1, 25000, 2)
+INSERT dbo.[MENU] VALUES (35, N'Trà đào', 1, 25000, 3)
+GO
+INSERT dbo.[AREA] VALUES (1, N'Giao hàng')
+INSERT dbo.[AREA] VALUES (2, N'Khu uống tại quán')
+GO
+INSERT dbo.[TICKET] VALUES (111, '2019-11-25 16:05:00.000', '2019-11-25 17:15:00.000', 2, 85000)
+INSERT dbo.[TICKET] VALUES (222, '2019-11-25 16:05:00.000', '2019-11-25 16:15:00.000', 1, 80000)
+GO
+INSERT dbo.[TICKETDETAIL] VALUES (1, 111, 15, 2, 60000)
+INSERT dbo.[TICKETDETAIL] VALUES (2, 111, 35, 1, 25000)
+INSERT dbo.[TICKETDETAIL] VALUES (3, 222, 15, 1, 30000)
+INSERT dbo.[TICKETDETAIL] VALUES (4, 222, 25, 1, 25000)
+INSERT dbo.[TICKETDETAIL] VALUES (5, 222, 35, 1, 25000)
+/*USE master
+GO
+DROP DATABASE AppTraSua*/
+GO
