@@ -1,0 +1,16 @@
+C:\Users\DELL\Desktop\Bubble T\bubbleT\bin\Debug\bubbleT.exe.config
+C:\Users\DELL\Desktop\Bubble T\bubbleT\bin\Debug\bubbleT.exe
+C:\Users\DELL\Desktop\Bubble T\bubbleT\bin\Debug\bubbleT.pdb
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.csprojAssemblyReference.cache
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\MainWindow.g.cs
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\App.g.cs
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT_MarkupCompile.cache
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT_MarkupCompile.lref
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\MainWindow.baml
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.g.resources
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.Properties.Resources.resources
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.csproj.GenerateResource.cache
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.exe
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\bubbleT.pdb
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\Login.g.cs
+C:\Users\DELL\Desktop\Bubble T\bubbleT\obj\Debug\Login.baml
