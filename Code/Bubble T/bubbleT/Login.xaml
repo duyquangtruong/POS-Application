@@ -66,6 +66,5 @@
                     Width="197" Height="33" Canvas.Left="237" Canvas.Top="393"/>
 
         <Image Source="images/Brand.png" Canvas.Left="658" Canvas.Top="112" />
-
     </Canvas>
 </Page>

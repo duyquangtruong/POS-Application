@@ -1,0 +1,17 @@
+﻿<Page x:Class="bubbleT.Delivery"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bubbleT"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="Delivery">
+    <Canvas Background="White">
+        <Canvas Background="#252A37" Width="1280px" Height="90">
+            <TextBlock Text="Delivery" FontFamily="Arial" FontSize="40px"
+                       Foreground="White" Canvas.Left="35" Canvas.Top="24"/>
+            <Image Source="images/MenuButton.png" Canvas.Left="1165" Canvas.Top="16"/>
+        </Canvas>
+    </Canvas>
+</Page>

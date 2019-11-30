@@ -16,20 +16,14 @@ using System.Windows.Shapes;
 namespace bubbleT
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Report.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Report : Page
     {
-        public MainWindow()
+        public Report()
         {
-
             InitializeComponent();
-            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }
