@@ -1,0 +1,42 @@
+﻿<Page x:Class="bubbleT.Accountmanage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:bubbleT"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="Accountmanage">
+
+    <Canvas Background="#FFFFFF">
+        <Label Background="#252A37" Foreground="White" Content="Account Manage" FontSize="30" HorizontalAlignment="Left" Height="76" Margin="0,0,0,0" VerticalAlignment="Top" Width="1198"/>
+        <Button HorizontalAlignment="Left" Height="76" Margin="1198,0,-0.4,0" VerticalAlignment="Top" Width="76">
+            <Image Height="76" Width="76" />
+        </Button>
+        <TextBox HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" Text="Username" FontSize="20" VerticalAlignment="Top" Width="218" Canvas.Left="50" Canvas.Top="97"/>
+        <TextBox HorizontalAlignment="Left" Height="47" Margin="308,97,0,0" TextWrapping="Wrap" Text="PassWord" FontSize="20" VerticalAlignment="Top" Width="218"/>
+        <Button Content="Find" FontSize="20" HorizontalAlignment="Left" Height="47" Margin="560,97,0,0" VerticalAlignment="Top" Width="67"/>
+        <Button Background="Green" Content="Insert" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="671,97,0,0" VerticalAlignment="Top" Width="128"/>
+        <Button Background="Red" Content="Delete" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="867,97,0,0" VerticalAlignment="Top" Width="128"/>
+        <Button Background="Blue" Content="Update" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="1070,97,0,0" VerticalAlignment="Top" Width="128"/>
+        <ListView HorizontalAlignment = "Left" Height = "453" Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149" Name = "Account" SelectionChanged="Account_SelectionChanged" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header = "Id" DisplayMemberBinding = "{Binding ID}" 
+                 Width="Auto" />
+
+                    <GridViewColumn Header = "Username" DisplayMemberBinding = "{Binding Username}" 
+                  Width = "auto"/>
+
+                    <GridViewColumn Header = "Password" DisplayMemberBinding = "{Binding Password}" 
+                  Width = "auto"/>
+
+                    <GridViewColumn Header = "Date" DisplayMemberBinding = "{Binding Date}" 
+                  Width = "auto"/>
+
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+    </Canvas>
+</Page>
