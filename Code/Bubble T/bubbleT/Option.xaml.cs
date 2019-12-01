@@ -24,5 +24,48 @@ namespace bubbleT
         {
             InitializeComponent();
         }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }      
+
+        private void btnSelling_Click(object sender, RoutedEventArgs e)
+        {
+            Selling selling = new Selling();
+            NavigationService.Navigate(selling);
+        }
+
+        private void btnDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            Delivery delivery = new Delivery();
+            NavigationService.Navigate(delivery);
+        }
+
+        private void btnReport_Click(object sender, RoutedEventArgs e)
+        {
+            Report report = new Report();
+            NavigationService.Navigate(report);
+        }
+
+        private void btnMenuSetting_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnAccount_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = Window.GetWindow(this);
+
+            if (parentWindow != null)
+            {
+                parentWindow.Close();
+            }
+        }
     }
 }

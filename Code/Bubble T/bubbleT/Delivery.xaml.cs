@@ -22,7 +22,7 @@ namespace bubbleT
     {
         public Delivery()
         {
-            InitializeComponent();
+            InitializeComponent();          
         }
     }
 }

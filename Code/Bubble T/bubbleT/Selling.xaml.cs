@@ -16,13 +16,19 @@ using System.Windows.Shapes;
 namespace bubbleT
 {
     /// <summary>
-    /// Interaction logic for Page1.xaml
+    /// Interaction logic for Selling.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class Selling : Page
     {
-        public Page1()
+        public Selling()
         {
-            InitializeComponent();
+            InitializeComponent();           
+        }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            Option option = new Option();
+            NavigationService.Navigate(option);
         }
     }
 }

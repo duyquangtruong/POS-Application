@@ -23,6 +23,12 @@ namespace bubbleT
         public Login()
         {
             InitializeComponent();
-        }        
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            Selling selling = new Selling();
+            this.NavigationService.Navigate(selling);
+        }
     }
 }

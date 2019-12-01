@@ -19,7 +19,7 @@
         <Button Background="Green" Content="Insert" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="671,97,0,0" VerticalAlignment="Top" Width="128"/>
         <Button Background="Red" Content="Delete" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="867,97,0,0" VerticalAlignment="Top" Width="128"/>
         <Button Background="Blue" Content="Update" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="1070,97,0,0" VerticalAlignment="Top" Width="128"/>
-        <ListView HorizontalAlignment = "Left" Height = "453" Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149" Name = "Account" SelectionChanged="Account_SelectionChanged" >
+        <ListView HorizontalAlignment = "Left" Height = "453" Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header = "Id" DisplayMemberBinding = "{Binding ID}" 

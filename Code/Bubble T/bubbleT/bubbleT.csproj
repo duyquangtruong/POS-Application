@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Selling.xaml.cs">
+      <DependentUpon>Selling.xaml</DependentUpon>
+    </Compile>
     <Page Include="Accountmanage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,9 +111,6 @@
     <Compile Include="Report.xaml.cs">
       <DependentUpon>Report.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Selling.xaml.cs">
-      <DependentUpon>Selling.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -152,6 +152,9 @@
     <Resource Include="images\next.png" />
     <Resource Include="images\nextend.png" />
     <Resource Include="images\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\logout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

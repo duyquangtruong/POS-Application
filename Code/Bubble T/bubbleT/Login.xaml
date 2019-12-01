@@ -62,7 +62,7 @@
                      FontSize="20px" Padding="7px" Canvas.Left="160" Canvas.Top="312">
         </PasswordBox>
         <Button Style="{StaticResource ResourceKey=RoundedButton}" x:Name="btnLogin" Content="Login" FontWeight="Bold"
-                    Foreground="#FAFAFA" FontSize="20"
+                    Foreground="#FAFAFA" FontSize="20" Click="btnLogin_Click"
                     Width="197" Height="33" Canvas.Left="237" Canvas.Top="393"/>
 
         <Image Source="images/Brand.png" Canvas.Left="658" Canvas.Top="112" />

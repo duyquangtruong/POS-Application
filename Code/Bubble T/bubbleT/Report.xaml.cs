@@ -22,8 +22,13 @@ namespace bubbleT
     {
         public Report()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            Option option = new Option();
+            NavigationService.Navigate(option);
+        }
     }
 }

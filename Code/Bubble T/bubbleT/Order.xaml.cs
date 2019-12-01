@@ -23,5 +23,10 @@ namespace bubbleT
         {
             InitializeComponent();
         }
+
+        private void p3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -12,7 +12,7 @@
         <Canvas Background="#252A37" Width="1280px" Height="70">
             <TextBlock Text="Report" FontFamily="Arial" FontSize="40px"
                        Foreground="White" Canvas.Left="35" Canvas.Top="14"/>
-            <Button Background="#252A37" BorderThickness="0" Height="60" Width="60" Canvas.Left="1162" Canvas.Top="5">
+            <Button Name="Menu" Click="Menu_Click" Background="#252A37" BorderThickness="0" Height="60" Width="60" Canvas.Left="1162" Canvas.Top="5">
                 <Image Source="images/MenuButton.png"/>
             </Button>
         </Canvas>
