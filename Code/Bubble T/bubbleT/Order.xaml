@@ -8,52 +8,61 @@
         Title="Order" Height="720" Width="1280">
     <Grid>
         <Grid x:Name="productType">
-            <Button x:Name="g1" Content=""  Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Height="75" />
-            <Button x:Name="g2" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top" Width="200" Height="75"/>
-            <Button x:Name="g3" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="485,10,0,0" VerticalAlignment="Top" Width="200" Height="75"/>
-            <Button x:Name="g4" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="200" Height="75"/>
-            <Button x:Name="g5" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="245,115,0,0" VerticalAlignment="Top" Width="200" Height="75"/>
-            <Button x:Name="g6" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="485,115,0,0" VerticalAlignment="Top" Width="200" Height="75"/>
+            <Button  x:Name="g1" Content=""  Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G1_Click" FontSize="26" FontWeight="Bold"/>
+            <Button x:Name="g2" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="245,10,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G2_Click" FontSize="26" FontWeight="Bold"/>
+            <Button x:Name="g3" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="485,10,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G3_Click" FontSize="26" FontWeight="Bold"/>
+            <Button x:Name="g4" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,115,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G4_Click" FontSize="26" FontWeight="Bold"/>
+            <Button x:Name="g5" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="245,115,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G5_Click" FontSize="26" FontWeight="Bold"/>
+            <Button x:Name="g6" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="485,115,0,0" VerticalAlignment="Top" Width="200" Height="75" Click="G6_Click" FontSize="26" FontWeight="Bold"/>
         </Grid>
         <Grid x:Name="product">
-            <Button x:Name="p1" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p2" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="245,230,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p3" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="490,230,0,0" VerticalAlignment="Top" Width="200" Height="45" RenderTransformOrigin="2.575,0.556"/>
-            <Button x:Name="p4" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p5" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="245,300,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p6" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="490,300,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p7" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p8" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="245,375,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
-            <Button x:Name="p9" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="490,375,0,0" VerticalAlignment="Top" Width="200" Height="45"/>
+            <Button x:Name="p1" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P1_Click"/>
+            <Button x:Name="p2" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="245,230,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P2_Click"/>
+            <Button x:Name="p3" Content="" Background="AliceBlue" HorizontalAlignment="Left" Margin="490,230,0,0" VerticalAlignment="Top" Width="200" Height="45" RenderTransformOrigin="2.575,0.556" Click="P3_Click"/>
+            <Button x:Name="p4" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P4_Click"/>
+            <Button x:Name="p5" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="245,300,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P5_Click"/>
+            <Button x:Name="p6" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="490,300,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P6_Click"/>
+            <Button x:Name="p7" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P7_Click"/>
+            <Button x:Name="p8" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="245,375,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P8_Click"/>
+            <Button x:Name="p9" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="490,375,0,0" VerticalAlignment="Top" Width="200" Height="45" Click="P9_Click"/>
         </Grid>
 
-        <ListView HorizontalAlignment="Left" Height="365" Margin="710,10,0,0" VerticalAlignment="Top" Width="553">
+        <ListView Name="Listview" HorizontalAlignment="Center" Height="365" Margin="710,10,0,0" VerticalAlignment="Top" Width="553" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
+                <GridView x:Name="gridviewItems">
+                    <GridViewColumn Header="Mặt hàng"  Width="170" DisplayMemberBinding="{Binding productName}" />
+                    <GridViewColumn Header="SL" Width="50" DisplayMemberBinding="{Binding quantity}" />
+                    <GridViewColumn Header="Giá" Width="100" DisplayMemberBinding="{Binding itemsPrice}" />
+                    <GridViewColumn Header="Thời gian" Width="223" DisplayMemberBinding="{Binding Time}" />
                 </GridView>
             </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="HỦY" Command="{Binding DeleteItems}" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="HỦY TẤT CẢ" Command="{Binding DeleteFile}" Click="MenuItem_Click_1"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
         <TextBlock HorizontalAlignment="Center" Margin="245,435,698.333,0" TextWrapping="Wrap" Text="MÓN PHỔ BIẾN TRONG THÁNG" VerticalAlignment="Top" Height="40" Width="330" FontSize="20" FontWeight="Black"/>
         <Grid x:Name="topProduct" Margin="0,10,0.333,-10.333">
-            <Button x:Name="tp1" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="150" Height="80"/>
-            <Button x:Name="tp2" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="150" Height="80"/>
-            <Button x:Name="tp3" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="320,470,0,0" VerticalAlignment="Top" Width="150" Height="80"/>
-            <Button x:Name="tp4" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="475,470,0,0" VerticalAlignment="Top" Width="150" Height="80" RenderTransformOrigin="3.321,0.375"/>
-            <Button x:Name="tp5" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="630,470,0,0" VerticalAlignment="Top" Width="150" Height="80"/>
+            <Button x:Name="tp1" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp1_Click"/>
+            <Button x:Name="tp2" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp2_Click"/>
+            <Button x:Name="tp3" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="320,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp3_Click"/>
+            <Button x:Name="tp4" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="475,470,0,0" VerticalAlignment="Top" Width="150" Height="80" RenderTransformOrigin="3.321,0.375" Click="Tp4_Click"/>
+            <Button x:Name="tp5" Content=""   Background="AliceBlue" HorizontalAlignment="Left" Margin="630,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp5_Click"/>
         </Grid>
-        <Image Source="images/btnExit.jpg" Canvas.Left="658" Canvas.Top="112" Margin="10,615,1028.333,-0.333" RenderTransformOrigin="0.255,0.588" />
+        <Image Source="images/btnExit.jpg" Canvas.Left="658" Canvas.Top="112" Margin="60,590,1008.333,-0.333" RenderTransformOrigin="0.255,0.588" />
         <Image Source="images/btntt.jpg" Canvas.Left="658" Canvas.Top="112" Margin="1028,575,10.333,9.667" RenderTransformOrigin="0.255,0.588" />
         <Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="940,385,213.333,0" TextWrapping="Wrap" Text="Số lượng:" VerticalAlignment="Top" Height="40" Width="120" FontWeight="Black" FontSize="24"/>
-            <TextBox x:Name="quantityP" HorizontalAlignment="Left" Height="40" Margin="1125,385,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" FontSize="24" FontWeight="Black"/>
-            <Button x:Name="add" Content="+" Background="Transparent" HorizontalAlignment="Left" Margin="1065,385,0,0" VerticalAlignment="Top" Width="40" Height="40" RenderTransformOrigin="1.375,0.508"/>
-            <Button x:Name="sub" Content="-"  Background="Transparent" HorizontalAlignment="Left" Margin="1223,385,0,0" VerticalAlignment="Top" Width="40" Height="40" RenderTransformOrigin="1.375,0.508"/>
+            <TextBlock HorizontalAlignment="Center" Margin="915,385,213.333,0" TextWrapping="Wrap" Text="Số lượng:" VerticalAlignment="Top" Height="40" Width="145" FontWeight="Black" FontSize="24"/>
+            <TextBox x:Name="quantityP" HorizontalAlignment="Left" Height="40" Margin="1125,385,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="80" FontSize="24" FontWeight="Black" TextChanged="QuantityP_TextChanged" TextAlignment="Center"/>
+            <Button x:Name="sub" Content="-" Background="Transparent" HorizontalAlignment="Left" Margin="1065,385,0,0" VerticalAlignment="Top" Width="40" Height="40" RenderTransformOrigin="1.375,0.508" Click="Sub_Click" FontSize="30" FontWeight="Black"/>
+            <Button x:Name="add" Content="+"  Background="Transparent" HorizontalAlignment="Left" Margin="1223,385,0,0" VerticalAlignment="Top" Width="40" Height="40" RenderTransformOrigin="1.375,0.508" Click="Add_Click" FontSize="30" FontWeight="Black"/>
         </Grid>
         <Grid>
-            <TextBlock HorizontalAlignment="Left" Margin="920,450,0,0" TextWrapping="Wrap" Text="TỔNG TIỀN:" VerticalAlignment="Top" Height="50" Width="135" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="50" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168"/>
-            <TextBlock HorizontalAlignment="Left" Margin="1095,450,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="50" Width="168"/>
+            <TextBlock HorizontalAlignment="Left" Margin="870,450,0,0" TextWrapping="Wrap" Text="TỔNG TIỀN:" VerticalAlignment="Top" Height="50" Width="185" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
+            <Border  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="50" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168"/>
+            <Button x:Name="total" Content="" Background="Transparent" HorizontalAlignment="Left" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168" Height="50" FontSize="24" FontWeight="Heavy" Click="Total_Click"/>
         </Grid>
     </Grid>
 </Window>
