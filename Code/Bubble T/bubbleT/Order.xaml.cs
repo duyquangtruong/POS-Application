@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Data.SqlClient;
 
 namespace bubbleT
 {
@@ -23,71 +16,123 @@ namespace bubbleT
         {
             private static List<pOrder> list = new List<pOrder>();
             private static List<pType> type = new List<pType>();
+            //số lượng hiện tại 1 món đang order
             public static int currentQuantity = 1;
+            //vị trí món order được lựa chọn
             public static int positionSelected = 0;
+            //số trang của nhóm hàng
+            public static int pageG = 0;
             internal static List<pOrder> List { get => list; set => list = value; }
             internal static List<pType> Type { get => type; set => type = value; }
         }
         public Order()
         {
             InitializeComponent();
-
+            //tai tat ca hang ban tu sql ve
             LoadMenu();
+            
             if (ORDER.Type.Count > 0) groupClick(g1, 0);
+            //an nut next va prev neu so luong nhom < 6
+            if (ORDER.Type.Count <= 6)
+            {
+                gPrev.Visibility = Visibility.Hidden;
+                gNext.Visibility = Visibility.Hidden;
+            }
+            else gPrev.IsEnabled = false;
         }
-
-        private void LoadMenu()
+        private void ShowGroupName()
         {
-            List<string> ls;
-            ls = new List<string>{
-                "Cafe Sữa 1", "Cafe Sữa 2",   "Cafe Sữa 3",  "Cafe Sữa 4"};
-            List<int> lsp = new List<int> { 25000, 35000, 45000, 55000 };
-            ORDER.Type.Add(new pType(1, "CAFE", ls, lsp));
-
-            ls = new List<string>
-            {
-                "Trà Sữa 1",  "Trà Sữa 2","Trà Sữa 3", "Trà Sữa 4",  "Trà Sữa 5","Trà Sữa 6"
-            };
-            lsp = new List<int>
-            {
-                25000, 35000,   45000,  55000,35000,33000
-            };
-            ORDER.Type.Add(new pType(2, "TRÀ SỮA", ls, lsp));
-            ls = new List<string>
-            {
-                "Trà Đào 1", "Trà Đào 2","Trà Đào 3", "Trà Đào 4", "Trà Đào 5",
-                "Trà Đào 6","Trà Đào 7", "Trà Đào 8" };
-            lsp = new List<int>
-            {
-                35000, 45000, 11000, 55000,35000,33000, 11000  ,  55000
-            };
-            ORDER.Type.Add(new pType(3, "TRÀ ĐÀO", ls, lsp));
-            for (int i = 0; i < ORDER.Type.Count; i++)
+            int n;
+            if (ORDER.Type.Count >= (ORDER.pageG + 1) * 6) n = 6;
+            else n = ORDER.Type.Count % 6;
+            for (int i = 0; i < n; i++)
             {
                 switch (i + 1)
                 {
                     case 1:
-                        g1.Content = ORDER.Type[i].getName();
+                        g1.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     case 2:
-                        g2.Content = ORDER.Type[i].getName();
+                        g2.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     case 3:
-                        g3.Content = ORDER.Type[i].getName();
+                        g3.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     case 4:
-                        g4.Content = ORDER.Type[i].getName();
+                        g4.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     case 5:
-                        g5.Content = ORDER.Type[i].getName();
+                        g5.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     case 6:
-                        g6.Content = ORDER.Type[i].getName();
+                        g6.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
                         break;
                     default:
                         break;
                 }
             }
+        }
+        private void LoadMenu()
+        {
+            List<int> typeIDTmp = new List<int>();
+            List<string> typeNameTmp = new List<string>();
+            using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("select * from PRO_TYPE", connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader != null)
+                        {
+                            while (reader.Read())
+                            {
+                                int ProTypeID = Convert.ToInt32(reader["ProTypeID"].ToString());
+                                String Name = reader["Name"].ToString();
+                                typeIDTmp.Add(ProTypeID);
+                                typeNameTmp.Add(Name);
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            for (int i = 0; i < typeIDTmp.Count; i++)
+            {
+                List<string> ls = new List<string>();
+                List<int> lsp = new List<int>();
+                using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("select* from PRODUCT where ProTypeID=" + typeIDTmp[i], connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader != null)
+                            {
+                                while (reader.Read())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
+                                        if (isActive)
+                                        {
+                                            int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
+                                            String PrdName = reader["ProductName"].ToString();
+                                            int Price = Convert.ToInt32(reader["Price"].ToString());
+                                            ls.Add(PrdName);
+                                            lsp.Add(Price);
+                                        }
+                                    }
+                                    ORDER.Type.Add(new pType(typeIDTmp[i], typeNameTmp[i], ls, lsp));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            ShowGroupName();
         }
         private void showProduct(int index)
         {
@@ -136,41 +181,65 @@ namespace bubbleT
         private void groupClick(Button g, int index)
         {
             //clean
-            g1.Background = Brushes.CornflowerBlue; ;
-            g2.Background = Brushes.CornflowerBlue; ;
-            g3.Background = Brushes.CornflowerBlue; ;
-            g4.Background = Brushes.CornflowerBlue; ;
-            g5.Background = Brushes.CornflowerBlue; ;
-            g6.Background = Brushes.CornflowerBlue; ;
+            g1.Background = Brushes.CornflowerBlue;
+            g2.Background = Brushes.CornflowerBlue;
+            g3.Background = Brushes.CornflowerBlue;
+            g4.Background = Brushes.CornflowerBlue;
+            g5.Background = Brushes.CornflowerBlue;
+            g6.Background = Brushes.CornflowerBlue;
             p1.Content = ""; p2.Content = ""; p3.Content = ""; p4.Content = ""; p5.Content = "";
             p6.Content = ""; p7.Content = ""; p8.Content = ""; p9.Content = "";
 
             g.Background = Brushes.DarkOrange;
             showProduct(index);
         }
+        private void GNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (ORDER.pageG + 1 <= (ORDER.Type.Count / 6))
+            {
+                gPrev.IsEnabled = true;
+                g1.Content = g2.Content = g3.Content = g4.Content = g5.Content = g6.Content = "";
+                ORDER.pageG = ORDER.pageG + 1;
+                groupClick(g1, 0 + ORDER.pageG * 6);
+                ShowGroupName();
+                if (ORDER.pageG == (ORDER.Type.Count / 6)) gNext.IsEnabled = false;
+            }
+        }
+        private void GPrev_Click(object sender, RoutedEventArgs e)
+        {
+            if (ORDER.pageG != 0)
+            {
+                gNext.IsEnabled = true;
+                g1.Content = g2.Content = g3.Content = g4.Content = g5.Content = g6.Content = "";
+                ORDER.pageG = ORDER.pageG - 1;
+                groupClick(g1, 0 + ORDER.pageG * 6);
+                ShowGroupName();
+                if (ORDER.pageG == 0) { gPrev.IsEnabled = false; }
+            }
+        }
         private void G1_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g1, 0);
+            groupClick(g1, 0 + ORDER.pageG * 6);
         }
         private void G2_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g2, 1);
+            groupClick(g2, 1 + ORDER.pageG * 6);
         }
         private void G3_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g3, 2);
+            groupClick(g3, 2 + ORDER.pageG * 6);
         }
         private void G4_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g4, 3);
+            groupClick(g4, 3 + ORDER.pageG * 6);
         }
         private void G5_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g5, 4);
+            groupClick(g5, 4 + ORDER.pageG * 6);
         }
         private void G6_Click(object sender, RoutedEventArgs e)
         {
-            groupClick(g6, 5);
+            groupClick(g6, 5 + ORDER.pageG * 6);
         }
         private void Listview_Load()
         {
@@ -188,6 +257,7 @@ namespace bubbleT
         {
             if (!p.Content.ToString().Equals(""))
             {
+
                 ORDER.currentQuantity = 1;
                 //split name, price
                 string[] tmpList = p.Content.ToString().Split('\n');
@@ -201,6 +271,10 @@ namespace bubbleT
                 Listview_Load();
                 //update totalAmount
 
+                //select quantity in textbox
+                quantityP.Focus();
+                quantityP.SelectionStart = 0;
+                quantityP.SelectionLength = quantityP.Text.Length;
 
                 sum();
             }
@@ -290,6 +364,9 @@ namespace bubbleT
         }
         private void QuantityP_TextChanged(object sender, TextChangedEventArgs e)
         {
+            quantityP.Focus();
+            quantityP.SelectionStart = quantityP.Text.Length;
+            quantityP.SelectionLength = 0;
             int val;
             int tmp = 1;
             if (int.TryParse(quantityP.Text, out val))
@@ -341,16 +418,25 @@ namespace bubbleT
                 int tmp = ORDER.List[i].quantity;
                 ORDER.currentQuantity = tmp;
                 quantityP.Text = tmp.ToString();
+
+                quantityP.Focus();
+                quantityP.SelectionStart = 0;
+                quantityP.SelectionLength = quantityP.Text.Length;
             }
+
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+
             var i = Listview.SelectedIndex;
-            Listview.Items.Remove(i);
-            ORDER.List.RemoveAt(i);
-            ORDER.positionSelected--;
-            sum();
-            Listview_Load();
+            if (i != -1)
+            {
+                Listview.Items.Remove(i);
+                ORDER.List.RemoveAt(i);
+                ORDER.positionSelected--;
+                sum();
+                Listview_Load();
+            }
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
@@ -363,7 +449,9 @@ namespace bubbleT
             }
             ORDER.positionSelected = 0;
             sum();
+            quantityP.Text = "";
             Listview_Load();
         }
+
     }
 }
