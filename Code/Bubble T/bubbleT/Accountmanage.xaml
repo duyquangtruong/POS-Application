@@ -9,16 +9,18 @@
       Title="Accountmanage">
 
     <Canvas Background="#FFFFFF">
-        <Label Background="#252A37" Foreground="White" Content="Account Manage" FontSize="30" HorizontalAlignment="Left" Height="76" Margin="0,0,0,0" VerticalAlignment="Top" Width="1198"/>
-        <Button HorizontalAlignment="Left" Height="76" Margin="1198,0,-0.4,0" VerticalAlignment="Top" Width="76">
-            <Image Height="76" Width="76" />
+        <Canvas Background="#252A37" Width="1280px" Height="70">
+            <TextBlock Text="Quản lý tài khoản" FontFamily="Arial" FontSize="40px"
+                       Foreground="White" Canvas.Left="35" Canvas.Top="14"/>
+            <Button Name="Menu" Click="Menu_Click" Background="#252A37" BorderThickness="0" Height="60" Width="60" Canvas.Left="1162" Canvas.Top="5">
+                <Image Source="images/MenuButton.png"/>
+            </Button>
+        </Canvas>
+        <TextBox x:Name="UserTextBox" TextWrapping="Wrap" FontSize="15px" FontFamily="Arial" Height="29" Width="218" Canvas.Left="58" Canvas.Top="115"/>
+        <Button Background="White" BorderThickness="0" Height="40px" Width="40px" Canvas.Left="310" Canvas.Top="104">
+            <Image Source="images/search.png"/>
         </Button>
-        <TextBox HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" Text="Username" FontSize="20" VerticalAlignment="Top" Width="218" Canvas.Left="50" Canvas.Top="97"/>
-        <TextBox HorizontalAlignment="Left" Height="47" Margin="308,97,0,0" TextWrapping="Wrap" Text="PassWord" FontSize="20" VerticalAlignment="Top" Width="218"/>
-        <Button Content="Find" FontSize="20" HorizontalAlignment="Left" Height="47" Margin="560,97,0,0" VerticalAlignment="Top" Width="67"/>
-        <Button Background="Green" Content="Insert" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="671,97,0,0" VerticalAlignment="Top" Width="128"/>
-        <Button Background="Red" Content="Delete" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="867,97,0,0" VerticalAlignment="Top" Width="128"/>
-        <Button Background="Blue" Content="Update" FontSize=" 20" HorizontalAlignment="Left" Height="47" Margin="1070,97,0,0" VerticalAlignment="Top" Width="128"/>
+        <Button Background="Green" Content="Thêm" FontSize=" 20" Height="47" Width="128" Canvas.Left="667" Canvas.Top="97"/>
         <ListView HorizontalAlignment = "Left" Height = "453" Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149">
             <ListView.View>
                 <GridView>
@@ -38,5 +40,21 @@
             </ListView.View>
 
         </ListView>
+        <TextBlock Canvas.Left="58" TextWrapping="Wrap" Text="Username" FontFamily="Arial" FontSize="20px" Canvas.Top="91" Height="19" Width="113"/>
+        <Button Background="#50E0A2" BorderThickness="0" Content="Thêm" FontSize="20px" Height="47" Width="128" Canvas.Left="667" Canvas.Top="97" Click="Button_Click">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
+            </Button.Effect>
+        </Button>
+        <Button Background="#FC4F4F" BorderThickness="0" Content="Xóa" FontSize="20px" Height="47" Width="128" Canvas.Left="817" Canvas.Top="97">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
+            </Button.Effect>
+        </Button>
+        <Button Background="#52C1FF" BorderThickness="0" Content="Sửa" FontSize="20px" Height="47" Width="128" Canvas.Left="1009" Canvas.Top="97">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
+            </Button.Effect>
+        </Button>
     </Canvas>
 </Page>

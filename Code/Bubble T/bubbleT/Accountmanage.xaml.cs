@@ -24,5 +24,15 @@ namespace bubbleT
         {
             InitializeComponent();
         }
+
+        private void Menu_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

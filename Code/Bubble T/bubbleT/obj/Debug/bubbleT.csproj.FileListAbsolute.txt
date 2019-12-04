@@ -24,3 +24,7 @@ C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\bubbleT.csproj.GenerateResource.cache
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\bubbleT.exe
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\bubbleT.pdb
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\MenuSetting.g.cs
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\MenuSetting.baml
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\Order.g.cs
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\Order.baml

@@ -50,12 +50,15 @@ namespace bubbleT
 
         private void btnMenuSetting_Click(object sender, RoutedEventArgs e)
         {
-            
+            MenuSetting menusetting = new MenuSetting();
+            NavigationService.Navigate(menusetting);
+
         }
 
         private void btnAccount_Click(object sender, RoutedEventArgs e)
         {
-            
+            Accountmanage accountmanage = new Accountmanage();
+            NavigationService.Navigate(accountmanage);
         }
 
         private void LogOut_Click(object sender, RoutedEventArgs e)

@@ -14,10 +14,10 @@
                        Foreground="White" Canvas.Left="37" Canvas.Top="19"/>
             <Button Name="btnAdd" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1042" Canvas.Top="6"
                     >
-                <Image Source="images/add.png"/>
+                <Image Source="images/add.png" Height="60" Width="60"/>
             </Button>
             <Button Name="Menu" Click="Menu_Click" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1154" Canvas.Top="6">
-                <Image Source="images/MenuButton.png" Canvas.Left="1165" Canvas.Top="6"/>
+                <Image Source="images/MenuButton.png" Canvas.Left="1165" Canvas.Top="6" Height="60" Width="60"/>
             </Button>
 
         </Canvas>

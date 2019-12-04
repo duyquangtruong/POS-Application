@@ -10,8 +10,11 @@
     <Canvas Background="White">
         <Canvas Background="#252A37" Width="1280px" Height="90">
             <TextBlock Text="Delivery" FontFamily="Arial" FontSize="40px"
-                       Foreground="White" Canvas.Left="35" Canvas.Top="24"/>
-            <Image Source="images/MenuButton.png" Canvas.Left="1165" Canvas.Top="16"/>
+                       Foreground="White" Canvas.Left="35" Canvas.Top="24"
+                       />
+            <Button Name="Menu" Click="Menu_Click" Background="#252A37" BorderThickness="0" Height="60" Width="60" Canvas.Left="1168" Canvas.Top="20">
+                <Image Source="images/MenuButton.png"/>
+            </Button>
         </Canvas>
     </Canvas>
 </Page>

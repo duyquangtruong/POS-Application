@@ -12,7 +12,7 @@
         <Button Name="Menu" Click="Menu_Click"  Background="#252A37" BorderThickness="0" Height="63" Width="72" Canvas.Top="10" Canvas.Left="26">
             <Image Source="images/MenuButton.png" Height="40" Width="40" Canvas.Left="20" Canvas.Top="18"/>
         </Button>
-        <TextBlock Text="Menu" FontSize="30px" FontFamily="Arial" Foreground="#B94848" Canvas.Left="103" Canvas.Top="26"/>
+        <TextBlock Text="Options" FontSize="30px" FontFamily="Arial" Foreground="#B94848" Canvas.Left="103" Canvas.Top="26"/>
         <Button Name="btnSelling" Click="btnSelling_Click" Background="#252A37" BorderThickness="0" Height="150" Width="150" Canvas.Left="423" Canvas.Top="147">
             <Image Source="images/Bill.png" Canvas.Left="280" Canvas.Top="63"/>
         </Button>

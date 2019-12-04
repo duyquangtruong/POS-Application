@@ -47,7 +47,7 @@
         </Style>
     </Page.Resources>
     <Canvas Background="#FAFAFA">
-        <TextBlock Text="Login to System" FontSize="25px" HorizontalAlignment="Center" FontFamily="Arial" Canvas.Left="243" Canvas.Top="162" Height="35" Width="191"/>
+        <TextBlock Text="Login to System" FontSize="30" HorizontalAlignment="Center" FontFamily="Candara" Canvas.Left="225" Canvas.Top="150" Height="35" Width="211"/>
         <TextBlock Text="Username" FontSize="16px" FontFamily="Arial" Canvas.Left="166" Canvas.Top="211"/>
         <TextBox Width="339" Canvas.Left="160" Canvas.Top="234" Height="44"
                  FontSize="20px" Padding="7px">
@@ -62,8 +62,9 @@
                      FontSize="20px" Padding="7px" Canvas.Left="160" Canvas.Top="312">
         </PasswordBox>
         <Button Style="{StaticResource ResourceKey=RoundedButton}" x:Name="btnLogin" Content="Login" FontWeight="Bold"
-                    Foreground="#FAFAFA" FontSize="20" Click="btnLogin_Click"
-                    Width="197" Height="33" Canvas.Left="237" Canvas.Top="393"/>
+                Foreground="#FAFAFA" FontSize="20" Click="btnLogin_Click"
+                Padding="5px"
+                Width="247" Height="45" Canvas.Left="207" Canvas.Top="387"/>
 
         <Image Source="images/Brand.png" Canvas.Left="658" Canvas.Top="112" />
     </Canvas>
