@@ -23,7 +23,7 @@
                 BorderThickness="0" Background="AntiqueWhite"/>
         <ListView Height="534" Canvas.Left="48" Canvas.Top="176" Width="1176" FontSize="15px" FontFamily="Arial">
             <ListView.View>                
-                <GridView>                    
+                <GridView>
                     <GridViewColumn Header="Tên mặt hàng" Width="400px"/>
                     <GridViewColumn Header="Số lượng" Width="200px"/>
                     <GridViewColumn Header="Đơn giá" Width="300px"/>
