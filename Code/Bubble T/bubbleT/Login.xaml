@@ -49,7 +49,7 @@
     <Canvas Background="#FAFAFA">
         <TextBlock Text="Login to System" FontSize="30" HorizontalAlignment="Center" FontFamily="Candara" Canvas.Left="225" Canvas.Top="150" Height="35" Width="211"/>
         <TextBlock Text="Username" FontSize="16px" FontFamily="Arial" Canvas.Left="166" Canvas.Top="211"/>
-        <TextBox Width="339" Canvas.Left="160" Canvas.Top="234" Height="44"
+        <TextBox Name="username" Width="339" Canvas.Left="160" Canvas.Top="234" Height="44"
                  FontSize="20px" Padding="7px">
             <TextBox.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -58,7 +58,7 @@
             </TextBox.Resources>
         </TextBox>
         <TextBlock Text="Password" FontSize="16px" FontFamily="Arial" Canvas.Left="166" Canvas.Top="289"/>
-        <PasswordBox Style="{StaticResource RoundedPass}" Height="44" Width="339" 
+        <PasswordBox Name="password" Style="{StaticResource RoundedPass}" Height="44" Width="339" 
                      FontSize="20px" Padding="7px" Canvas.Left="160" Canvas.Top="312">
         </PasswordBox>
         <Button Style="{StaticResource ResourceKey=RoundedButton}" x:Name="btnLogin" Content="Login" FontWeight="Bold"
