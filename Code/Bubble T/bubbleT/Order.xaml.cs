@@ -20,19 +20,21 @@ namespace bubbleT
             public static int currentQuantity = 1;
             //vị trí món order được lựa chọn
             public static int positionSelected = 0;
-            //số trang của nhóm hàng
+            //trang hiện tại của nhóm hàng
             public static int pageG = 0;
+            //trang hiện tại của mặt hàng
+            public static int pageP = 0;
+            //Vị trí nhóm hàng đang chọn
+            public static int posG = 0;
             internal static List<pOrder> List { get => list; set => list = value; }
             internal static List<pType> Type { get => type; set => type = value; }
         }
-        public Order()
+        public MainWindow()
         {
             InitializeComponent();
-            //tai tat ca hang ban tu sql ve
+
             LoadMenu();
-            
             if (ORDER.Type.Count > 0) groupClick(g1, 0);
-            //an nut next va prev neu so luong nhom < 6
             if (ORDER.Type.Count <= 6)
             {
                 gPrev.Visibility = Visibility.Hidden;
@@ -43,33 +45,12 @@ namespace bubbleT
         private void ShowGroupName()
         {
             int n;
+            List<Button> gBtn = new List<Button> { g1, g2, g3, g4, g5, g6 };
             if (ORDER.Type.Count >= (ORDER.pageG + 1) * 6) n = 6;
             else n = ORDER.Type.Count % 6;
             for (int i = 0; i < n; i++)
             {
-                switch (i + 1)
-                {
-                    case 1:
-                        g1.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    case 2:
-                        g2.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    case 3:
-                        g3.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    case 4:
-                        g4.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    case 5:
-                        g5.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    case 6:
-                        g6.Content = ORDER.Type[i + ORDER.pageG * 6].getName();
-                        break;
-                    default:
-                        break;
-                }
+                gBtn[i].Content = ORDER.Type[i + ORDER.pageG * 6].getName();
             }
         }
         private void LoadMenu()
@@ -136,50 +117,49 @@ namespace bubbleT
         }
         private void showProduct(int index)
         {
+            ClearNameAndPrice();
             if (ORDER.Type.Count > index)
             {
                 List<string> lname = ORDER.Type[index].getListName();
                 List<int> lprice = ORDER.Type[index].getListPrice();
                 int n = lname.Count;
-                for (int i = 0; i < n; i++)
+                List<TextBlock> nameP = new List<TextBlock> { nameP1, nameP2, nameP3, nameP4, nameP5, nameP6, nameP7, nameP8, nameP9 };
+                List<TextBlock> priceP = new List<TextBlock> { priceP1, priceP2, priceP3, priceP4, priceP5, priceP6, priceP7, priceP8, priceP9 };
+                for (int i = 0; i < 9; i++)
                 {
-                    switch (i + 1)
+                    if (i + ORDER.pageP * 9 < n)
                     {
-                        case 1:
-                            p1.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 2:
-                            p2.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 3:
-                            p3.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 4:
-                            p4.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 5:
-                            p5.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 6:
-                            p6.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 7:
-                            p7.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 8:
-                            p8.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        case 9:
-                            p9.Content = lname[i] + "\n" + Convert.ToString(lprice[i]);
-                            break;
-                        default:
-                            break;
+                        nameP[i].Text = lname[i + ORDER.pageP * 9];
+                        priceP[i].Text = Convert.ToString(lprice[i + ORDER.pageP * 9]);
                     }
                 }
             }
         }
+        private void ClearNameAndPrice()
+        {
+            nameP1.Text = nameP2.Text = nameP3.Text = nameP4.Text = nameP5.Text = nameP6.Text = nameP7.Text =
+              nameP8.Text = nameP9.Text = "";
+            priceP1.Text = priceP2.Text = priceP3.Text = priceP4.Text = priceP5.Text = priceP6.Text = priceP7.Text =
+            priceP8.Text = priceP9.Text = "";
+        }
         private void groupClick(Button g, int index)
         {
+            ORDER.posG = index;
+            ORDER.pageP = 0;
+            pPrev.IsEnabled = false;
+            if (index < ORDER.Type.Count)
+            {
+                if (ORDER.Type[ORDER.posG].getListName().Count > 9)
+                {
+                    pNext.IsEnabled = true;
+                }
+                else
+                {
+                    pNext.IsEnabled = false;
+                }
+            }
+            else pNext.IsEnabled = false;
+
             //clean
             g1.Background = Brushes.CornflowerBlue;
             g2.Background = Brushes.CornflowerBlue;
@@ -187,9 +167,7 @@ namespace bubbleT
             g4.Background = Brushes.CornflowerBlue;
             g5.Background = Brushes.CornflowerBlue;
             g6.Background = Brushes.CornflowerBlue;
-            p1.Content = ""; p2.Content = ""; p3.Content = ""; p4.Content = ""; p5.Content = "";
-            p6.Content = ""; p7.Content = ""; p8.Content = ""; p9.Content = "";
-
+            ClearNameAndPrice();
             g.Background = Brushes.DarkOrange;
             showProduct(index);
         }
@@ -253,17 +231,17 @@ namespace bubbleT
             if (Listview.Items.Count != 0)
                 if (ORDER.positionSelected > 0) Listview.ScrollIntoView(Listview.Items[ORDER.positionSelected]);
         }
-        private void AddItem(Button p)
+        private void AddItem(TextBlock nameP, TextBlock priceP)
         {
-            if (!p.Content.ToString().Equals(""))
+            if (nameP.Text != "" || priceP.Text != "")
             {
-
                 ORDER.currentQuantity = 1;
                 //split name, price
-                string[] tmpList = p.Content.ToString().Split('\n');
-                string name = tmpList[0]; string price = tmpList[1];
+                // string[] tmpList = p.Content.ToString().Split('\n');
+                //  string name = tmpList[0]; string price = tmpList[1];
+
                 //ADD to list prd
-                ORDER.List.Add(new pOrder(name, 1, Convert.ToInt32(price), DateTime.Now));
+                ORDER.List.Add(new pOrder(nameP.Text, 1, Convert.ToInt32(priceP.Text), DateTime.Now));
                 ORDER.positionSelected = ORDER.List.Count - 1;
                 quantityP.Text = "1";
 
@@ -290,39 +268,39 @@ namespace bubbleT
         }
         private void P1_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p1);
+            AddItem(nameP1, priceP1);
         }
         private void P2_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p2);
+            AddItem(nameP2, priceP2);
         }
         private void P3_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p3);
+            AddItem(nameP3, priceP3);
         }
         private void P4_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p4);
+            AddItem(nameP4, priceP4);
         }
         private void P5_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p5);
+            AddItem(nameP5, priceP5);
         }
         private void P6_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p6);
+            AddItem(nameP6, priceP6);
         }
         private void P7_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p7);
+            AddItem(nameP7, priceP7);
         }
         private void P8_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p8);
+            AddItem(nameP8, priceP8);
         }
         private void P9_Click(object sender, RoutedEventArgs e)
         {
-            AddItem(p9);
+            AddItem(nameP9, priceP9);
         }
         private void Tp1_Click(object sender, RoutedEventArgs e)
         {
@@ -364,24 +342,31 @@ namespace bubbleT
         }
         private void QuantityP_TextChanged(object sender, TextChangedEventArgs e)
         {
-            quantityP.Focus();
-            quantityP.SelectionStart = quantityP.Text.Length;
-            quantityP.SelectionLength = 0;
-            int val;
-            int tmp = 1;
-            if (int.TryParse(quantityP.Text, out val))
+            if (ORDER.List.Count == 0)
             {
-                tmp = Convert.ToInt32(val);
+                quantityP.Text = "";
             }
-            if (ORDER.List.Count != 0)
+            else
             {
-                pOrder prd = ORDER.List[ORDER.positionSelected];
-                prd.quantity = tmp;
-                prd.itemsPrice = tmp * prd.Price;
+                quantityP.Focus();
+                quantityP.SelectionStart = quantityP.Text.Length;
+                quantityP.SelectionLength = 0;
+                int val;
+                int tmp = 1;
+                if (int.TryParse(quantityP.Text, out val))
+                {
+                    tmp = Convert.ToInt32(val);
+                }
+                if (ORDER.List.Count != 0)
+                {
+                    pOrder prd = ORDER.List[ORDER.positionSelected];
+                    prd.quantity = tmp;
+                    prd.itemsPrice = tmp * prd.Price;
+                }
+                ORDER.currentQuantity = tmp;
+                Listview_Load();
+                sum();
             }
-            ORDER.currentQuantity = tmp;
-            Listview_Load();
-            sum();
         }
         private void Add_Click(object sender, RoutedEventArgs e)
         {
@@ -400,11 +385,6 @@ namespace bubbleT
                 sum();
             }
         }
-        private void TotalAmount_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void Total_Click(object sender, RoutedEventArgs e)
         {
 
@@ -427,7 +407,6 @@ namespace bubbleT
         }
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
             var i = Listview.SelectedIndex;
             if (i != -1)
             {
@@ -436,6 +415,10 @@ namespace bubbleT
                 ORDER.positionSelected--;
                 sum();
                 Listview_Load();
+                if (ORDER.List.Count == 0)
+                {
+                    quantityP.Text = "";
+                }
             }
         }
 
@@ -452,6 +435,28 @@ namespace bubbleT
             quantityP.Text = "";
             Listview_Load();
         }
+        private void PPrev_Click(object sender, RoutedEventArgs e)
+        {
+            if (ORDER.pageP != 0)
+            {
+                ORDER.pageP = ORDER.pageP - 1;
+                showProduct(ORDER.posG);
+                if (ORDER.pageP == 0) pPrev.IsEnabled = false;
+                pNext.IsEnabled = true;
+            }
+        }
 
+        private void PNext_Click(object sender, RoutedEventArgs e)
+        {
+            int n = ORDER.Type[ORDER.posG].getListName().Count / 9;
+            if (ORDER.Type[ORDER.posG].getListName().Count % 9 == 0) n = n - 1;
+            if (ORDER.pageP + 1 <= n)
+            {
+                ORDER.pageP = ORDER.pageP + 1;
+                showProduct(ORDER.posG);
+                if (ORDER.pageP == n) pNext.IsEnabled = false;
+                pPrev.IsEnabled = true;
+            }
+        }
     }
 }
