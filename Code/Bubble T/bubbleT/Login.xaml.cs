@@ -37,8 +37,7 @@ namespace bubbleT
             }
             else
             {
-                this.NavigationService.Navigate(op);
-                //MessageBox.Show("unvalid username or password");
+                MessageBox.Show("unvalid username or password");
             }
         }
     }
