@@ -13,7 +13,7 @@
             <TextBlock Text="Bán Hàng" FontFamily="Arial" FontSize="40px"
                        Foreground="White" Canvas.Left="37" Canvas.Top="19"/>
             <Button Name="btnAdd" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1042" Canvas.Top="6"
-                    >
+                    Click="btnAdd_Click">
                 <Image Source="images/add.png" Height="60" Width="60"/>
             </Button>
             <Button Name="Menu" Click="Menu_Click" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1154" Canvas.Top="6">

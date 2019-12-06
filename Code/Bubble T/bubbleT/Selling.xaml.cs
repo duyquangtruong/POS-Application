@@ -30,5 +30,11 @@ namespace bubbleT
             Option option = new Option();
             NavigationService.Navigate(option);
         }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Order order = new Order();
+            NavigationService.Navigate(order);
+        }
     }
 }

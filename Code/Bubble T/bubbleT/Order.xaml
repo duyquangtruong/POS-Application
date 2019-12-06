@@ -1,4 +1,4 @@
-﻿<Window x:Class="bubbleT.Order"
+﻿<Page x:Class="bubbleT.Order"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:bubbleT"
         mc:Ignorable="d"
         Title="Order" Height="720" Width="1280">
-    <Grid>
+    <Grid Background="White">
         <Grid x:Name="productType">
             <Button  x:Name="g1" Content=""  Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G1_Click" FontSize="26" FontWeight="Bold"/>
             <Button x:Name="g2" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,10,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G2_Click" FontSize="26" FontWeight="Bold"/>
@@ -116,4 +116,4 @@
             <Button x:Name="total" Content="" Background="Transparent" HorizontalAlignment="Left" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168" Height="50" FontSize="24" FontWeight="Heavy" Click="Total_Click"/>
         </Grid>
     </Grid>
-</Window>
+</Page>

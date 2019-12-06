@@ -10,7 +10,7 @@ namespace bubbleT
     /// <summary>
     /// Interaction logic for Order.xaml
     /// </summary>
-    public partial class Order : Window
+    public partial class Order : Page
     {
         public class ORDER
         {
@@ -29,7 +29,7 @@ namespace bubbleT
             internal static List<pOrder> List { get => list; set => list = value; }
             internal static List<pType> Type { get => type; set => type = value; }
         }
-        public MainWindow()
+        public Order()
         {
             InitializeComponent();
 
