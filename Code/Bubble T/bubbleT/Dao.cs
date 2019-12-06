@@ -46,6 +46,34 @@ namespace bubbleT
                 return false;
             }
         }
+        public bool InsertProduct(string a, string b,string c,bool? d)
+        {
+            try
+            {
+                SqlConnection cnn = Connect();
+                int i;
+                if (d ?? true)
+                {
+                    i = 1;
+                }
+                else {
+                    i = 0;    
+                }
+                SqlDataAdapter da = new SqlDataAdapter(string.Format("insert into PRODUCT values({0},'{1}',{2},{3},6,NULL)",a,b,i,c), cnn);
+                MessageBox.Show(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i));
+                DataSet dt = new DataSet();
+                da.Fill(dt);
+                da.Dispose();
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("loiaoi");
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
         public DataTable GetProduct()
         {
             try
