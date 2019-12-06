@@ -15,7 +15,7 @@ namespace bubbleT
         public SqlConnection Connect()
         {
             Con = new SqlConnection();   //Khởi tạo đối tượng
-            string datasource = @"LAPTOP-KIRKOR";
+            string datasource = ".";
 
             string database = "AppTraSua";
             Con.ConnectionString = @"Data Source=" + datasource + ";Initial Catalog="

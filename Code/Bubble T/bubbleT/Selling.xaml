@@ -21,5 +21,22 @@
             </Button>
 
         </Canvas>
+        <ListView Name="Listview" Height="625" Canvas.Left="10" Canvas.Top="85" Width="1260">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Mã Phiếu" Width="200" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Thời gian" Width="200" DisplayMemberBinding="{Binding Time}" />
+                    <GridViewColumn Header="Tổng tiền" Width="200" DisplayMemberBinding="{Binding Total}" />
+                </GridView>
+                
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="XEM CHI TIẾT" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="KẾT THÚC" Click="MenuItem_Click_1"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <Button Content="Button" Height="100" Width="75"/>
+        </ListView>
     </Canvas>
 </Page>

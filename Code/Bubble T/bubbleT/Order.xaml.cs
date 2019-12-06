@@ -29,10 +29,11 @@ namespace bubbleT
             internal static List<pOrder> List { get => list; set => list = value; }
             internal static List<pType> Type { get => type; set => type = value; }
         }
+       
         public Order()
         {
             InitializeComponent();
-
+            StartTime.Text= DateTime.Now.ToString();
             LoadMenu();
             if (ORDER.Type.Count > 0) groupClick(g1, 0);
             if (ORDER.Type.Count <= 6)
@@ -42,6 +43,7 @@ namespace bubbleT
             }
             else gPrev.IsEnabled = false;
         }
+
         private void ShowGroupName()
         {
             int n;
@@ -52,6 +54,10 @@ namespace bubbleT
             {
                 gBtn[i].Content = ORDER.Type[i + ORDER.pageG * 6].getName();
             }
+        }
+
+        public void DescOrder()
+        {
         }
         private void LoadMenu()
         {
@@ -94,20 +100,17 @@ namespace bubbleT
                             {
                                 while (reader.Read())
                                 {
-                                    while (reader.Read())
+                                    bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
+                                    if (isActive)
                                     {
-                                        bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
-                                        if (isActive)
-                                        {
-                                            int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
-                                            String PrdName = reader["ProductName"].ToString();
-                                            int Price = Convert.ToInt32(reader["Price"].ToString());
-                                            ls.Add(PrdName);
-                                            lsp.Add(Price);
-                                        }
+                                        int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
+                                        String PrdName = reader["ProductName"].ToString();
+                                        int Price = Convert.ToInt32(reader["Price"].ToString());
+                                        ls.Add(PrdName);
+                                        lsp.Add(Price);
                                     }
-                                    ORDER.Type.Add(new pType(typeIDTmp[i], typeNameTmp[i], ls, lsp));
                                 }
+                                ORDER.Type.Add(new pType(typeIDTmp[i], typeNameTmp[i], ls, lsp));
                             }
                         }
                     }
@@ -226,6 +229,7 @@ namespace bubbleT
             Listview.Items.Clear();
             foreach (var prd in Prd)
             {
+                
                 Listview.Items.Add(prd);
             }
             if (Listview.Items.Count != 0)
@@ -233,7 +237,7 @@ namespace bubbleT
         }
         private void AddItem(TextBlock nameP, TextBlock priceP)
         {
-            if (nameP.Text != "" || priceP.Text != "")
+            if (nameP.Text != "" && priceP.Text != "")
             {
                 ORDER.currentQuantity = 1;
                 //split name, price
@@ -255,6 +259,9 @@ namespace bubbleT
                 quantityP.SelectionLength = quantityP.Text.Length;
 
                 sum();
+            }
+            else {
+                if (priceP.Text == "" && nameP.Text != "") MessageBox.Show("Chưa cập nhật giá");
             }
         }
         private void sum()
@@ -424,12 +431,8 @@ namespace bubbleT
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            int n = ORDER.List.Count;
-            for (int k = 0; k < n; k++)
-            {
-                ORDER.List.RemoveAt(n - k - 1);
-                Listview.Items.Remove(n - k - 1);
-            }
+            ORDER.List.Clear();
+            Listview.Items.Clear();
             ORDER.positionSelected = 0;
             sum();
             quantityP.Text = "";
@@ -458,5 +461,65 @@ namespace bubbleT
                 pPrev.IsEnabled = true;
             }
         }
+        private void ResetDataOrder()
+        { //reset data
+            ORDER.currentQuantity = 1;
+            ORDER.positionSelected = 0;
+            ORDER.pageG = 0;
+            ORDER.pageP = 0;
+            ORDER.posG = 0;
+            ORDER.List.Clear();
+            ORDER.Type.Clear();
+        }
+        private void ESC_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Hủy đơn hàng", "Cảnh báo!!!", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                ResetDataOrder();
+                NavigationService.GoBack();
+            }
+        }
+
+        private void Payment_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán\nTổng tiền:"+total.Content, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                string desc = "";
+                int n = ORDER.List.Count;
+                desc = "Tổng:  " + total.Content.ToString() + "\n";
+                for (int i = 0; i < n; i++)
+                {
+                    desc = desc + ORDER.List[i].productName + " (SL:" + ORDER.List[i].quantity + "_Giá:" + ORDER.List[i].itemsPrice + ")" + Environment.NewLine;
+                }
+
+
+                //using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+                //{
+                //    String query = "INSERT INTO dbo.BILL (BillID,Date,CusTypeID,TotalAmout) VALUES (@id,@DATE,@CUS, @TOTAL)";
+                //    using (SqlCommand command = new SqlCommand(query, connection))
+                //    {
+                //        command.Parameters.AddWithValue("@id", "2");
+                //        command.Parameters.AddWithValue("@DATE", "");
+                //        command.Parameters.AddWithValue("@CUS", "1");
+                //        command.Parameters.AddWithValue("@TOTAL", "");
+
+                //        connection.Open();
+                //        int result1 = command.ExecuteNonQuery();
+
+                //        // Check Error
+                //        if (result1 < 0)
+                //            Console.WriteLine("Error inserting data into Database!");
+                //    }
+                //}
+
+
+                var selling = new Selling(this, desc);
+                ResetDataOrder();
+                NavigationService.Navigate(selling);
+            }
+        }
+
     }
 }
