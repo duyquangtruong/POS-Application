@@ -29,11 +29,11 @@ namespace bubbleT
             internal static List<pOrder> List { get => list; set => list = value; }
             internal static List<pType> Type { get => type; set => type = value; }
         }
-       
+
         public Order()
         {
             InitializeComponent();
-            StartTime.Text= DateTime.Now.ToString();
+            StartTime.Text = DateTime.Now.ToString();
             LoadMenu();
             if (ORDER.Type.Count > 0) groupClick(g1, 0);
             if (ORDER.Type.Count <= 6)
@@ -229,7 +229,7 @@ namespace bubbleT
             Listview.Items.Clear();
             foreach (var prd in Prd)
             {
-                
+
                 Listview.Items.Add(prd);
             }
             if (Listview.Items.Count != 0)
@@ -260,7 +260,8 @@ namespace bubbleT
 
                 sum();
             }
-            else {
+            else
+            {
                 if (priceP.Text == "" && nameP.Text != "") MessageBox.Show("Chưa cập nhật giá");
             }
         }
@@ -483,7 +484,8 @@ namespace bubbleT
 
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán\nTổng tiền:"+total.Content, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            int newID=-1;
+            MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán\nTổng tiền:" + total.Content, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 string desc = "";
@@ -495,27 +497,48 @@ namespace bubbleT
                 }
 
 
-                //using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
-                //{
-                //    String query = "INSERT INTO dbo.BILL (BillID,Date,CusTypeID,TotalAmout) VALUES (@id,@DATE,@CUS, @TOTAL)";
-                //    using (SqlCommand command = new SqlCommand(query, connection))
-                //    {
-                //        command.Parameters.AddWithValue("@id", "2");
-                //        command.Parameters.AddWithValue("@DATE", "");
-                //        command.Parameters.AddWithValue("@CUS", "1");
-                //        command.Parameters.AddWithValue("@TOTAL", "");
+                using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+                {
+                   
+                    String query1 = "INSERT INTO dbo.BILL (Date,IsOver,CusTypeID,TotalAmount) VALUES (@DATE,0,@CUS, @TOTAL)"
+                        + "SELECT CAST(scope_identity() AS int)"; ;
+                    String query2 = "INSERT INTO dbo.BILLDETAIL (BillID,ProductID,ProductName,BDquantity,BDTotalAmount) VALUES (@NewID,@prdID,@prdName, @quantity,@total)";
+                    using (SqlCommand command = new SqlCommand(query1, connection))
+                    {
+                        command.Parameters.AddWithValue("@DATE", DateTime.Now);
+                        command.Parameters.AddWithValue("@CUS", "1");
+                        command.Parameters.AddWithValue("@TOTAL", total.Content.ToString());
 
-                //        connection.Open();
-                //        int result1 = command.ExecuteNonQuery();
-
-                //        // Check Error
-                //        if (result1 < 0)
-                //            Console.WriteLine("Error inserting data into Database!");
-                //    }
-                //}
+                        connection.Open();
+                        newID = (Int32)command.ExecuteScalar();
+                        // Check Error
+                        if (newID < 0)
+                            Console.WriteLine("Error inserting data into Database!");
+                    }
 
 
-                var selling = new Selling(this, desc);
+
+                    int result2;
+                    for (int i = 0; i < n; i++)
+                    {
+                        using (SqlCommand command = new SqlCommand(query2, connection))
+                        {
+                            command.Parameters.AddWithValue("@NewID", newID);
+                            command.Parameters.AddWithValue("@prdID", "1");
+                            command.Parameters.AddWithValue("@prdName", ORDER.List[i].productName);
+                            command.Parameters.AddWithValue("@quantity", ORDER.List[i].quantity);
+                            command.Parameters.AddWithValue("@total", ORDER.List[i].itemsPrice);
+
+                            result2 = command.ExecuteNonQuery();
+                            // Check Error
+                            if (result2 < 0)
+                                Console.WriteLine("Error inserting data into Database!");
+                        }
+                    }
+                }
+
+
+                var selling = new Selling(this, desc,newID);
                 ResetDataOrder();
                 NavigationService.Navigate(selling);
             }

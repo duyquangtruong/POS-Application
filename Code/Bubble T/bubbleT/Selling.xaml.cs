@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,23 +23,22 @@ namespace bubbleT
     {
         public class SELLING
         {
-            public static int i = 0;
-            private static List<Order> list = new List<Order>();
+            public static int flag = 0;
             private static List<string> description = new List<string>();
-
+            private static List<SellingListView> list = new List<SellingListView>();
             public static List<string> Description { get => description; set => description = value; }
-            internal static List<Order> List { get => list; set => list = value; }
-
+            public static List<SellingListView> List { get => list; set => list = value; }
         }
         public Selling()
         {
             InitializeComponent();
+            if (SELLING.flag == 0) CheckBill();
             Listview_Load();
         }
-        public Selling(Order order, string desc)
+        public Selling(Order order, string desc, int newID)
         {
             InitializeComponent();
-            SELLING.List.Add(order);
+            SELLING.List.Add(new SellingListView(newID , order.total.Content.ToString(), order.StartTime.Text));
             SELLING.Description.Add(desc);
             Listview_Load();
 
@@ -60,12 +60,10 @@ namespace bubbleT
         {
             //add listview
             var Ls = SELLING.List;
-            int i = 0;
             Listview.Items.Clear();
             foreach (var ls in Ls)
             {
-                var tmp = new SellingListView(i++, ls.total.Content.ToString(), ls.StartTime.Text);
-                Listview.Items.Add(tmp);
+                Listview.Items.Add(ls);
             }
         }
         public class SellingListView
@@ -81,7 +79,7 @@ namespace bubbleT
             var i = Listview.SelectedIndex;
             if (i != -1)
             {
-                MessageBox.Show(SELLING.Description[i],Title="CHI TIẾT");
+                MessageBox.Show(SELLING.Description[i], Title = "CHI TIẾT");
             }
         }
 
@@ -90,11 +88,67 @@ namespace bubbleT
             var i = Listview.SelectedIndex;
             if (i != -1)
             {
+                CheckISOver(i);
                 Listview.Items.Remove(i);
                 SELLING.List.RemoveAt(i);
                 SELLING.Description.RemoveAt(i);
                 Listview_Load();
             }
         }
+        private void CheckBill()
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+            {
+                using (SqlCommand command = new SqlCommand("select COUNT(*) from BILL where IsOver=0", connection))
+                {
+                    connection.Open();
+                    count = (Int32)command.ExecuteScalar();
+
+
+                }
+                if (count != 0)
+                {
+                    string desc = "Tổng tiền: ";
+                    using (SqlCommand command = new SqlCommand("select BillID,TotalAmount,Date from BILL  where IsOver=0", connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader != null)
+                            {
+                                while (reader.Read())
+                                {
+                                    int id = Convert.ToInt32(reader["BillID"].ToString());
+                                    int total = Convert.ToInt32(reader["TotalAmount"].ToString());
+                                    String time = reader["Date"].ToString();
+                                    SELLING.List.Add(new SellingListView(id, total.ToString(), time));
+                                    desc = desc + total;
+                                    SELLING.Description.Add(desc);
+                                    desc = "";
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            SELLING.flag = 1;
+        }
+        private void CheckISOver(int index)
+        {
+            if (SELLING.List[index].ID!=-1)
+            { 
+            using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+            {
+                using (SqlCommand command = new SqlCommand("update BILL set IsOver=1 where BillID=@id", connection))
+                {
+                    connection.Open();
+                    command.Parameters.AddWithValue("@id", SELLING.List[index].ID);
+                    command.ExecuteScalar();
+                }
+            }
+            }
+        }
     }
+
 }

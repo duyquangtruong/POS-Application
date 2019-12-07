@@ -8,6 +8,7 @@ namespace bubbleT
 {
     class pOrder
     {
+        public int ID { get; set; }
         public string productName { get; set; }
         public int quantity { get; set; }
         public int itemsPrice { get; set; }
@@ -21,5 +22,6 @@ namespace bubbleT
             this.Price = total;
             this.Time = time;
         }
+        public void setID (int id){ this.ID = id; }
     }
 }
