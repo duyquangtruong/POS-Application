@@ -46,7 +46,7 @@ CREATE PROCEDURE pCapNhatPopular @ProductID int
 AS
 BEGIN
 	UPDATE PRODUCT
-	SET Popular = (SELECT DISTINCT ROUND(CAST(dbo.fDemSoSP(PRO.ProductID) as float) / dbo.fDemTongSoLy(), 1) 
+	SET Popular = (SELECT DISTINCT ROUND(CAST(dbo.fDemSoSP(PRO.ProductID) as float) / dbo.fDemTongSoLy(), 4) 
 	FROM PRODUCT AS PRO, BILLDETAIL AS BDT
 	WHERE PRO.ProductID = BDT.ProductID and PRO.ProductID = @ProductID)
 	WHERE ProductID = @ProductID
@@ -95,7 +95,7 @@ BEGIN
 END
 GO 
 --DROP PROC pThemChiTietHoaDon
---EXEC pThemChiTietHoaDon 7, 2
+--EXEC pThemChiTietHoaDon , 10
 GO
 
 -- Thủ tục kết thúc hóa đơn
@@ -148,3 +148,16 @@ BEGIN
 	END
 END
 GO
+
+select * from BILLDETAIL
+
+select * from PRODUCT WHERE [Popular] >= (select max([Popular]) from PRODUCT)
+GO
+
+CREATE FUNCTION fTimMaxPopular ()
+RETURNS table
+AS
+	return (select * from PRODUCT WHERE [Popular] >= (select max([Popular]) from PRODUCT))
+GO
+
+--select * from dbo.fTimMaxPopular()
