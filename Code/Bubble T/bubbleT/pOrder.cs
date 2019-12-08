@@ -14,8 +14,9 @@ namespace bubbleT
         public int itemsPrice { get; set; }
         public int Price { get; set; }
         public DateTime Time { get; set; }
-        public pOrder(string prdName, int quantity, int total, DateTime time)
+        public pOrder(int ID,string prdName, int quantity, int total, DateTime time)
         {
+            this.ID = ID;
             this.productName = prdName;
             this.quantity = quantity;
             this.itemsPrice = total;

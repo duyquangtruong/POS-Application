@@ -8,12 +8,12 @@
         Title="Order" Height="720" Width="1280">
     <Grid Background="White">
         <Grid x:Name="productType" >
-            <Button  x:Name="g1" Content=""  Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G1_Click" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="g2" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G2_Click" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="g3" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="464,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G3_Click" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="g4" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="188" Height="75" Click="G4_Click" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="g5" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G5_Click" FontSize="20" FontWeight="Bold"/>
-            <Button x:Name="g6" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="464,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G6_Click" FontSize="20" FontWeight="Bold"/>
+            <Button  x:Name="g1" Content=""  Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G1_Click" FontSize="20" FontWeight="ExtraBold"/>
+            <Button x:Name="g2" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G2_Click" FontSize="20" FontWeight="ExtraBold"/>
+            <Button x:Name="g3" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="464,35,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G3_Click" FontSize="20" FontWeight="ExtraBold"/>
+            <Button x:Name="g4" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="188" Height="75" Click="G4_Click" FontSize="20" FontWeight="ExtraBold"/>
+            <Button x:Name="g5" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G5_Click" FontSize="20" FontWeight="ExtraBold"/>
+            <Button x:Name="g6" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="464,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G6_Click" FontSize="20" FontWeight="ExtraBold"/>
             <Button Name="gNext" Content="next" HorizontalAlignment="Left" Margin="660,140,0,0" VerticalAlignment="Top" Width="50" Height="30" Click="GNext_Click"/>
             <Button Name="gPrev" Content="prev" HorizontalAlignment="Left" Margin="660,80,0,0" VerticalAlignment="Top" Width="50" Height="30" Click="GPrev_Click"/>
 
@@ -21,55 +21,55 @@
         <Grid x:Name="product"  >
             <Button x:Name="p1"  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P1_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP1" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP1" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP1" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p2" Background="AliceBlue" HorizontalAlignment="Left" Margin="229,230,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P2_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP2" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP2" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP2" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p3"  Background="AliceBlue" HorizontalAlignment="Left" Margin="458,230,0,0" VerticalAlignment="Top" Width="202" Height="45" Click="P3_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP3" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP3" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP3" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p4" Background="AliceBlue" HorizontalAlignment="Left" Margin="10,300,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P4_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP4" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP4" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP4" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p5"  Background="AliceBlue" HorizontalAlignment="Left" Margin="229,300,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P5_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP5" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP5" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP5" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p6"  Background="AliceBlue" HorizontalAlignment="Left" Margin="458,300,0,0" VerticalAlignment="Top" Width="202" Height="45" Click="P6_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP6" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP6" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP6" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p7" Background="AliceBlue" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P7_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP7" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP7" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP7" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p8" Background="AliceBlue" HorizontalAlignment="Left" Margin="229,375,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P8_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP8" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP8" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP8" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
             <Button x:Name="p9"  Background="AliceBlue" HorizontalAlignment="Left" Margin="458,375,0,0" VerticalAlignment="Top" Width="202" Height="45" Click="P9_Click">
                 <StackPanel>
-                    <TextBlock Name="nameP9" Height="22" Width="181" TextAlignment="Left"></TextBlock>
+                    <TextBlock Name="nameP9" Height="22" Width="181" TextAlignment="Left" FontSize="12px" FontWeight="Bold"></TextBlock>
                     <TextBlock Name="priceP9" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
@@ -94,18 +94,44 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <TextBlock HorizontalAlignment="Center" Margin="68,435,702,0" TextWrapping="Wrap" Text="MÓN PHỔ BIẾN TRONG THÁNG" VerticalAlignment="Top" Height="40" Width="330" FontSize="20" FontWeight="Black" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Center" Margin="317,431,799,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="164" FontSize="20" FontWeight="Black"><Run Text="MÓN PHỔ BIẾN"/><LineBreak/><Run/></TextBlock>
         <Grid x:Name="topProduct" Margin="0,10,0,-10"  >
-            <Button x:Name="tp1" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp1_Click"/>
-            <Button x:Name="tp2" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp2_Click"/>
-            <Button x:Name="tp3" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="320,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp3_Click"/>
-            <Button x:Name="tp4" Content=""  Background="AliceBlue" HorizontalAlignment="Left" Margin="475,470,0,0" VerticalAlignment="Top" Width="150" Height="80" RenderTransformOrigin="3.321,0.375" Click="Tp4_Click"/>
-            <Button x:Name="tp5" Content=""   Background="AliceBlue" HorizontalAlignment="Left" Margin="630,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp5_Click"/>
+            <Button x:Name="tp1"  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp1_Click">
+                <StackPanel>
+                    <TextBlock x:Name="nameTP1" Height="37" Width="144" TextAlignment="Left" FontSize="10px" FontWeight="Bold"/>
+                    <TextBlock x:Name="priceTP1" Width="139" Height="32" TextAlignment="Right"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="tp2"   Background="AliceBlue" HorizontalAlignment="Left" Margin="165,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp2_Click">
+                <StackPanel>
+                    <TextBlock Name="nameTP2"  Height="37" Width="144" TextAlignment="Left" FontSize="10px" FontWeight="Bold"></TextBlock>
+                    <TextBlock Name="priceTP2" Width="139" Height="32" TextAlignment="Right"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="tp3"  Background="AliceBlue" HorizontalAlignment="Left" Margin="320,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp3_Click">
+                <StackPanel>
+                    <TextBlock Name="nameTP3" Height="37" Width="144" TextAlignment="Left" FontSize="10px" FontWeight="Bold"></TextBlock>
+                    <TextBlock Name="priceTP3" Width="139" Height="32" TextAlignment="Right"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="tp4"   Background="AliceBlue" HorizontalAlignment="Left" Margin="475,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp4_Click">
+                <StackPanel>
+                    <TextBlock Name="nameTP4"  Height="37" Width="144" TextAlignment="Left" FontSize="10px" FontWeight="Bold"></TextBlock>
+                    <TextBlock Name="priceTP4" Width="139" Height="32" TextAlignment="Right"></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="tp5"   Background="AliceBlue" HorizontalAlignment="Left" Margin="630,470,0,0" VerticalAlignment="Top" Width="150" Height="80" Click="Tp5_Click">
+                <StackPanel>
+                    <TextBlock Name="nameTP5"  Height="37" Width="144" TextAlignment="Left" FontSize="10px" FontWeight="Bold"></TextBlock>
+                    <TextBlock Name="priceTP5" Width="139" Height="32" TextAlignment="Right"></TextBlock>
+                </StackPanel>
+            </Button>
         </Grid>
-        <Button Name="ESC" Content="ESC TMP" FontSize="20" HorizontalAlignment="Left" Margin="68,590,0,0" VerticalAlignment="Top" Width="170" Height="80" Click="ESC_Click"  />
-        <Image Source="images/btnExit.jpg" Margin="238,590,822,50" RenderTransformOrigin="0.255,0.588"  />
-        <Button Name="Payment" Content="THANH TOÁN TMP" Margin="885,590,45,50"  Width="170" Height="80" FontSize="20" Click="Payment_Click" >
-            <!--<Image Source="images/btntt.jpg" Canvas.Left="658" Canvas.Top="112" Margin="988,535,50,50" RenderTransformOrigin="0.255,0.588" />-->
+        <Button Name="ESC"  FontSize="20" HorizontalAlignment="Left" Margin="68,580,0,0" VerticalAlignment="Top" Width="135" Height="80" Click="ESC_Click"  >
+            <Image Source="images/btnExit.jpg" Width="135" Height="80"></Image>
+        </Button>
+        <Button Name="Payment"  Margin="975,578,127,62" Height="80" FontSize="20" Click="Payment_Click" >
+            <Image Source="images/btntt.jpg" Width="174" Height="80"></Image>
         </Button>
         <Grid  >
             <TextBlock HorizontalAlignment="Center" Margin="915,385,213.333,0" TextWrapping="Wrap" Text="Số lượng:" VerticalAlignment="Top" Height="40" Width="145" FontWeight="Black" FontSize="24"/>
@@ -119,6 +145,6 @@
             <Button x:Name="total" Content="" Background="Transparent" HorizontalAlignment="Left" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168" Height="50" FontSize="24" FontWeight="Heavy" Click="Total_Click"/>
         </Grid>
         <TextBlock Name="StartTime" HorizontalAlignment="Left" Margin="137,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"  Width="185" Height="20"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Thời gian khởi tạo:" VerticalAlignment="Top" Width="120" FontWeight="Black"/>
+        <TextBlock HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Thời gian khởi tạo:" VerticalAlignment="Top" Width="120" FontWeight="Black"/>
     </Grid>
 </Page>

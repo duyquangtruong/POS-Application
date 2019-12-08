@@ -32,6 +32,7 @@ namespace bubbleT
 
         public Order()
         {
+
             InitializeComponent();
             StartTime.Text = DateTime.Now.ToString();
             LoadMenu();
@@ -43,7 +44,6 @@ namespace bubbleT
             }
             else gPrev.IsEnabled = false;
         }
-
         private void ShowGroupName()
         {
             int n;
@@ -54,10 +54,6 @@ namespace bubbleT
             {
                 gBtn[i].Content = ORDER.Type[i + ORDER.pageG * 6].getName();
             }
-        }
-
-        public void DescOrder()
-        {
         }
         private void LoadMenu()
         {
@@ -82,16 +78,11 @@ namespace bubbleT
                         }
                     }
                 }
-            }
-
-
-            for (int i = 0; i < typeIDTmp.Count; i++)
-            {
-                List<string> ls = new List<string>();
-                List<int> lsp = new List<int>();
-                using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
+                for (int i = 0; i < typeIDTmp.Count; i++)
                 {
-                    connection.Open();
+                    List<string> ls = new List<string>();
+                    List<int> lsp = new List<int>();
+                    List<int> lID = new List<int>();
                     using (SqlCommand command = new SqlCommand("select* from PRODUCT where ProTypeID=" + typeIDTmp[i], connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -106,14 +97,41 @@ namespace bubbleT
                                         int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
                                         String PrdName = reader["ProductName"].ToString();
                                         int Price = Convert.ToInt32(reader["Price"].ToString());
+                                        lID.Add(ProductID);
                                         ls.Add(PrdName);
                                         lsp.Add(Price);
                                     }
                                 }
-                                ORDER.Type.Add(new pType(typeIDTmp[i], typeNameTmp[i], ls, lsp));
+                                ORDER.Type.Add(new pType(typeIDTmp[i], typeNameTmp[i], lID, ls, lsp));
                             }
                         }
                     }
+                }
+                List<TextBlock> nameP = new List<TextBlock> { nameTP1, nameTP2, nameTP3, nameTP4, nameTP5 };
+                List<TextBlock> priceP = new List<TextBlock> { priceTP1, priceTP2, priceTP3, priceTP4, priceTP5 };
+                int k = 0;
+                using (SqlCommand command = new SqlCommand("exec sp_GetPopularProduct", connection))
+                { 
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
+                            if (isActive)
+                            {
+                                int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
+                                String PrdName = reader["ProductName"].ToString();
+                                int Price = Convert.ToInt32(reader["Price"].ToString());
+                                nameP[k].DataContext = ProductID;
+                                nameP[k].Text = PrdName;
+                                priceP[k].Text = Price.ToString();
+                            }
+                                k += 1;
+                        }
+                    }
+                }
                 }
             }
             ShowGroupName();
@@ -125,17 +143,20 @@ namespace bubbleT
             {
                 List<string> lname = ORDER.Type[index].getListName();
                 List<int> lprice = ORDER.Type[index].getListPrice();
+                List<int> lID = ORDER.Type[index].getListID();
                 int n = lname.Count;
-                List<TextBlock> nameP = new List<TextBlock> { nameP1, nameP2, nameP3, nameP4, nameP5, nameP6, nameP7, nameP8, nameP9 };
-                List<TextBlock> priceP = new List<TextBlock> { priceP1, priceP2, priceP3, priceP4, priceP5, priceP6, priceP7, priceP8, priceP9 };
+                List<TextBlock> nameP = new List<TextBlock> { nameP1, nameP2, nameP3, nameP4, nameP5, nameP6, nameP7, nameP8, nameP9,          };
+                List<TextBlock> priceP = new List<TextBlock> { priceP1, priceP2, priceP3, priceP4, priceP5, priceP6, priceP7, priceP8, priceP9, priceTP1, priceTP2, priceTP3, priceTP4, priceTP5 };
                 for (int i = 0; i < 9; i++)
                 {
                     if (i + ORDER.pageP * 9 < n)
                     {
+                        nameP[i].DataContext = lID[i + ORDER.pageP * 9];
                         nameP[i].Text = lname[i + ORDER.pageP * 9];
                         priceP[i].Text = Convert.ToString(lprice[i + ORDER.pageP * 9]);
                     }
                 }
+
             }
         }
         private void ClearNameAndPrice()
@@ -240,12 +261,10 @@ namespace bubbleT
             if (nameP.Text != "" && priceP.Text != "")
             {
                 ORDER.currentQuantity = 1;
-                //split name, price
-                // string[] tmpList = p.Content.ToString().Split('\n');
-                //  string name = tmpList[0]; string price = tmpList[1];
 
                 //ADD to list prd
-                ORDER.List.Add(new pOrder(nameP.Text, 1, Convert.ToInt32(priceP.Text), DateTime.Now));
+                int id = (int)nameP.DataContext ;
+                ORDER.List.Add(new pOrder(id,nameP.Text, 1, Convert.ToInt32(priceP.Text), DateTime.Now));
                 ORDER.positionSelected = ORDER.List.Count - 1;
                 quantityP.Text = "1";
 
@@ -312,22 +331,23 @@ namespace bubbleT
         }
         private void Tp1_Click(object sender, RoutedEventArgs e)
         {
+            AddItem(nameTP1, priceTP1);
         }
         private void Tp2_Click(object sender, RoutedEventArgs e)
         {
-
+            AddItem(nameTP2, priceTP2);
         }
         private void Tp3_Click(object sender, RoutedEventArgs e)
         {
-
+            AddItem(nameTP3, priceTP3);
         }
         private void Tp4_Click(object sender, RoutedEventArgs e)
         {
-
+            AddItem(nameTP4, priceTP4);
         }
         private void Tp5_Click(object sender, RoutedEventArgs e)
         {
-
+            AddItem(nameTP5, priceTP5);
         }
         private void Sub_Click(object sender, RoutedEventArgs e)
         {
@@ -524,7 +544,7 @@ namespace bubbleT
                         using (SqlCommand command = new SqlCommand(query2, connection))
                         {
                             command.Parameters.AddWithValue("@NewID", newID);
-                            command.Parameters.AddWithValue("@prdID", "1");
+                            command.Parameters.AddWithValue("@prdID", ORDER.List[i].ID);
                             command.Parameters.AddWithValue("@prdName", ORDER.List[i].productName);
                             command.Parameters.AddWithValue("@quantity", ORDER.List[i].quantity);
                             command.Parameters.AddWithValue("@total", ORDER.List[i].itemsPrice);

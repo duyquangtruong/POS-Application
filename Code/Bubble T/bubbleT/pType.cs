@@ -10,12 +10,14 @@ namespace bubbleT
     {
         private int id;
         private string name;
+        private List<int> listIDPrd = new List<int>();
         private List<string> listPrdName = new List<string>();
         private List<int> listPrdPrice = new List<int>();
 
-        public pType(int id, string name, List<string> listpn, List<int> listpp)
+        public pType(int id, string name, List<int> listid, List<string> listpn, List<int> listpp)
         {
             this.id = id; this.name = name;
+            listIDPrd = listid;
             listPrdName = listpn;
             listPrdPrice = listpp;
         }
@@ -28,7 +30,10 @@ namespace bubbleT
         {
             return this.name;
         }
-
+        public List<int> getListID()
+        {
+            return this.listIDPrd;
+        }
         public List<string> getListName()
         {
             return this.listPrdName;
@@ -37,5 +42,6 @@ namespace bubbleT
         {
             return this.listPrdPrice;
         }
+ 
     }
 }
