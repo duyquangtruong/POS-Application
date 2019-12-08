@@ -10,13 +10,14 @@ CREATE NONCLUSTERED INDEX ProductID_BillDetail
 CREATE NONCLUSTERED INDEX BillID_BillDetail
 	ON [BILLDETAIL] ([BillID])
 GO
+
 --produce, function, trigger
--- Function đém số lượng ly đã bán của sản phẩm
+-- Function đếm số lượng ly đã bán của sản phẩm
 CREATE FUNCTION fDemSoSP(@ProductID int) 
 RETURNS int AS 
 BEGIN 
 	DECLARE @nPro int; 
-	SELECT @nPro = sum(BDT.BDQuantity) 
+	SELECT @nPro = SUM(BDT.BDQuantity) 
 	FROM PRODUCT AS PRO, BILLDETAIL AS BDT
 	WHERE PRO.ProductID = BDT.ProductID and PRO.ProductID = @ProductID; 
 	IF (@nPro IS NULL) 
@@ -26,12 +27,12 @@ END
 GO
 --select dbo.fDemSoSP(1)
 GO
--- Function đém tổng số ly đã bán
+-- Function đếm tổng số ly đã bán
 CREATE FUNCTION fDemTongSoLy() 
 RETURNS int AS 
 BEGIN 
 	DECLARE @nSum int; 
-	SELECT @nSum = sum(BDQuantity) 
+	SELECT @nSum = SUM(BDQuantity) 
 	FROM BILLDETAIL;
 	IF (@nSum IS NULL) 
 		SET @nSum = 0; 
@@ -45,86 +46,85 @@ CREATE PROCEDURE pCapNhatPopular @ProductID int
 AS
 BEGIN
 	UPDATE PRODUCT
-	SET Popular = (SELECT round(cast(dbo.fDemSoSP(PRO.ProductID) as float) / dbo.fDemTongSoLy(), 1) 
+	SET Popular = (SELECT DISTINCT ROUND(CAST(dbo.fDemSoSP(PRO.ProductID) as float) / dbo.fDemTongSoLy(), 1) 
 	FROM PRODUCT AS PRO, BILLDETAIL AS BDT
 	WHERE PRO.ProductID = BDT.ProductID and PRO.ProductID = @ProductID)
 	WHERE ProductID = @ProductID
 END
 GO
+--DROP PROCEDURE pCapNhatPopular
 --Ví dụ:
 --EXEC pCapNhatPopular 1
 
--- Thủ tục tính tổng tiền của 1 sản phẩm trong chi tiết hóa đơn với tham số đầu vào: BillDetailID, BillID, ProductID
-CREATE PROCEDURE pTotalAmountBillDetail @BillDetailID int, @BillID int, @ProductID int
+
+-- Thủ tục cập nhật lại popular cho tất cả sản phẩm
+CREATE PROCEDURE pCapNhatPopularAll
 AS
 BEGIN
-	UPDATE BILLDETAIL
-	SET BDTotalAmout = (SELECT PRO.Price * BDT.BDQuantity 
-	FROM PRODUCT AS PRO, BILLDETAIL AS BDT
-	WHERE PRO.ProductID = BDT.ProductID and PRO.ProductID = @ProductID)
-	WHERE BillDetailID = @BillDetailID AND BillID = @BillID
+	DECLARE @ID INT = 1 ;
+	DECLARE @Count INT = (SELECT COUNT(*) FROM PRODUCT) ;
+ 
+	WHILE @ID <= @Count
+	BEGIN
+		EXEC pCapNhatPopular @ID
+
+		SET @ID = @ID + 1 ;
+	END
 END
 GO
---EXEC pTotalAmountBillDetail 1 , 111, 1
-GO
--- Thủ tục tính tổng tiền hóa đơn với tham số đầu vào: BillID
-CREATE PROCEDURE pTotalAmountBill @BillID int
-AS
-BEGIN
-	UPDATE BILL
-	SET TotalAmout = (SELECT SUM(BDT.BDTotalAmout) 
-	FROM BILL AS BI, BILLDETAIL AS BDT
-	WHERE BI.BillID = BDT.BillID and BI.BillID = @BillID)
-	WHERE BillID = @BillID
-END
-GO
---EXEC pTotalAmountBill 111
+--Ví dụ:
+--EXEC pCapNhatPopularAll
 GO
 
-create procedure pThemChiTietHoaDon @BillDetailID INT, @BillID INT, @ProductID INT, @BDQuantity INT
+-- Thủ tục bắt đầu khởi tạo hóa đơn
+CREATE PROCEDURE pKhoiTaoHoaDon
 AS
 BEGIN
-	-- Kiểm tra BillID có tồn tại
-	IF(EXISTS(SELECT BillID FROM BILL WHERE @BillID = BillID))
-	BEGIN
-		-- Kiểm tra BillDetailID có hợp lệ
-		IF(EXISTS(SELECT BillDetailID FROM BILLDETAIL WHERE @BillDetailID = BillDetailID))
-		BEGIN
-			RAISERROR (N'BillDetailID ĐÃ TỒN TẠI', 16, 1)
-		END
-		ELSE
-		BEGIN
-			IF(EXISTS(SELECT BillID FROM BILL WHERE @BillID < BillID))
-			BEGIN
-				RAISERROR (N'BillID ĐÃ QUA XỬ LÝ', 14, 1)
-			END
-			ELSE
-			BEGIN
-				INSERT INTO BILLDETAIL(BillDetailID, BillID, ProductID, BDQuantity) 
-				VALUES (@BillDetailID, @BillID, @ProductID, @BDQuantity)
-				EXEC pTotalAmountBillDetail @BillDetailID , @BillID, @ProductID
-			END
-		END
-	END
-	ELSE
-	BEGIN
-		PRINT N'BillID KHÔNG TỒN TẠI TRONG DATABASE'
-	END
+	INSERT INTO dbo.[BILL]([Date], [CusTypeID]) VALUES (NULL, NULL)
 END
 GO 
-DROP PROC pThemChiTietHoaDon
---EXEC pThemChiTietHoaDon 7, 222, 7, 1
+--EXEC pKhoiTaoHoaDon
+go
+
+-- Thủ tục thêm chi tiết hóa đơn
+CREATE PROCEDURE pThemChiTietHoaDon @ProductID INT, @BDQuantity INT
+AS
+BEGIN
+	INSERT INTO BILLDETAIL ([BillID], [ProductID], [BDQuantity], [BDTotalAmout]) VALUES
+	((SELECT [NextBillID] FROM [TEMPNUMBER]), @ProductID, @BDQuantity, 	(SELECT Price * @BDQuantity FROM PRODUCT WHERE ProductID = @ProductID))
+END
+GO 
+--DROP PROC pThemChiTietHoaDon
+--EXEC pThemChiTietHoaDon 7, 2
 GO
---Tìm kiếm hóa đơn theo ngày (từ ngày... đến ngày...)--
+
+-- Thủ tục kết thúc hóa đơn
+CREATE PROCEDURE pKetThucHoaDon @CusTypeID INT
+AS
+BEGIN
+	UPDATE [BILL]
+	SET [Date] = GETDATE(), [CusTypeID] = @CusTypeID, [TotalAmout] = (SELECT SUM(BDT.BDTotalAmout) 
+	FROM [BILL] AS BI, [BILLDETAIL] AS BDT
+	WHERE BI.BillID = BDT.BillID)
+	WHERE BillID = (SELECT [NextBillID] FROM [TEMPNUMBER])
+
+	UPDATE [TEMPNUMBER]
+	SET [NextBillID] = [NextBillID] + 1
+END
+GO 
+--EXEC pKetThucHoaDon 2
+GO
+
+-- Hàm tìm kiếm hóa đơn theo ngày (từ ngày... đến ngày...)
 CREATE FUNCTION fTimHoaDonTheoNgay (@TuNgay DATETIME, @DenNgay DATETIME)
 RETURNS table
 AS
 	return (SELECT * FROM BILL WHERE Date BETWEEN @TuNgay AND @DenNgay)
 GO
 --Ví dụ:
---select * from dbo.fTimHoaDonTheoNgay('2019-11-20', '2019-12-1')
+--select * from dbo.fTimHoaDonTheoNgay('2019-11-20', '2019-12-10')
 
---Không cho phép xóa hóa đơn--
+-- Không cho phép xóa hóa đơn
 CREATE TRIGGER trgXoaChiTietHoaDon
 ON BILLDETAIL
 FOR DELETE

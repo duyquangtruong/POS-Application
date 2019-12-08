@@ -1,11 +1,11 @@
-﻿CREATE DATABASE AppTraSua
+CREATE DATABASE AppTraSua
 GO
 USE AppTraSua
 GO
 
 --drop table [USER]
 CREATE TABLE [USER](
-	[UserID] [int] NOT NULL,
+	[UserID] [int] identity(1,1) NOT NULL,
 	[UserName] [varchar](25) NOT NULL,
 	[Password] [varchar](25) NOT NULL,
 	[isActive] [bit] NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE [USER](
 GO
 --drop table [USERGROUP]
 CREATE TABLE [USERGROUP](
-	[GroupID] [int] NOT NULL,
+	[GroupID] [int] identity(1,1) NOT NULL,
 	[GroupName] [nvarchar](25) NULL,
  CONSTRAINT [PK_USERGROUP_GroupID] PRIMARY KEY CLUSTERED 
 (
@@ -28,7 +28,7 @@ CREATE TABLE [USERGROUP](
 GO
 --drop table [PRODUCT]
 CREATE TABLE [PRODUCT](
-	[ProductID] [int] NOT NULL,
+	[ProductID] [int] identity(1,1) NOT NULL,
 	[ProductName] [nvarchar](50) NULL,
 	[isActive] [bit] NOT NULL,
 	[Price] [int] NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE [PRODUCT](
 GO
 --drop table [PRO_TYPE]
 CREATE TABLE [PRO_TYPE](
-	[ProTypeID] [int] NOT NULL,
+	[ProTypeID] [int] identity(1,1) NOT NULL,
 	[Name] [nvarchar](25) NULL,
  CONSTRAINT [PK_GROUPMENU_GroupMenuID] PRIMARY KEY CLUSTERED 
 (
@@ -52,7 +52,7 @@ CREATE TABLE [PRO_TYPE](
 GO
 --drop table [CUS_TYPE]
 CREATE TABLE [CUS_TYPE](
-	[CusTypeID] [int] NOT NULL,
+	[CusTypeID] [int] identity(1,1) NOT NULL,
 	[Name] [nvarchar](25) NULL,
  CONSTRAINT [PK_AREA_AreaID] PRIMARY KEY CLUSTERED 
 (
@@ -62,7 +62,7 @@ CREATE TABLE [CUS_TYPE](
 GO
 --drop table [BILL]
 CREATE TABLE [BILL](
-	[BillID] [int] NOT NULL,
+	[BillID] [int] identity(1,1) NOT NULL,
 	[Date] [datetime] NULL,
 	[CusTypeID] [int] NULL,
 	[TotalAmout] [int] NULL,
@@ -74,7 +74,7 @@ CREATE TABLE [BILL](
 GO
 --drop table [BILLDETAIL]
 CREATE TABLE [BILLDETAIL](
-	[BillDetailID] [int] NOT NULL,
+	[BillDetailID] [int] identity(1,1) NOT NULL,
 	[BillID] [int] NOT NULL,
 	[ProductID] [int] NOT NULL,
 	[BDQuantity] [int] NULL,
@@ -86,6 +86,12 @@ CREATE TABLE [BILLDETAIL](
 )
 )
 GO
+
+CREATE TABLE [TEMPNUMBER](
+	[NextBillID] [int] NULL,
+)
+GO
+
 
 ALTER TABLE [USER]
 ADD CONSTRAINT FK_USER_USERGROUP
