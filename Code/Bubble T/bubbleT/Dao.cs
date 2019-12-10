@@ -46,7 +46,25 @@ namespace bubbleT
                 return false;
             }
         }
-        public bool InsertProduct(string a, string b,string c,bool? d)
+        public bool DeleteProduct(string id)
+        {
+            try
+            {
+                SqlConnection cnn = Connect();
+                //MessageBox.Show(string.Format("delete from PRODUCT where PRODUCT.ProductID = {0}", id));
+                SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductID = {0}", id), cnn);
+                cmd.ExecuteNonQuery();
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("loiaoi");
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
+        public bool UpdateProduct(string a, string b,string c,bool? d)
         {
             try
             {
@@ -56,14 +74,14 @@ namespace bubbleT
                 {
                     i = 1;
                 }
-                else {
-                    i = 0;    
+                else
+                {
+                    i = 0;
                 }
-                SqlDataAdapter da = new SqlDataAdapter(string.Format("insert into PRODUCT values({0},'{1}',{2},{3},6,NULL)",a,b,i,c), cnn);
-                MessageBox.Show(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i));
-                DataSet dt = new DataSet();
-                da.Fill(dt);
-                da.Dispose();
+                SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductID = {0}", a), cnn);
+                cmd.ExecuteNonQuery();
+                SqlCommand cmd0 = new SqlCommand(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i), cnn);
+                cmd0.ExecuteNonQuery();
                 cnn.Close();
                 return true;
             }
@@ -72,6 +90,43 @@ namespace bubbleT
                 MessageBox.Show("loiaoi");
                 MessageBox.Show(e.ToString());
                 return false;
+            }
+        }
+        public void InsertProduct(string a, string b,string c,bool? d)
+        {
+            try
+            {
+                SqlConnection cnn = Connect();
+                SqlDataAdapter da = new SqlDataAdapter(string.Format("select * from PRODUCT as p where p.ProductID = {0}",a), cnn);
+                DataSet dt = new DataSet();
+                da.Fill(dt);
+                da.Dispose();                
+                if (dt.Tables[0].Rows.Count > 0)
+                {
+                    MessageBox.Show("ID invalid");
+                    cnn.Close();
+                }
+                else
+                {
+                    int i;
+                    if (d ?? true)
+                    {
+                        i = 1;
+                    }
+                    else
+                    {
+                        i = 0;
+                    }
+                    SqlCommand cmd = new SqlCommand(string.Format("insert into PRODUCT values({0},'{1}',{2},{3},6,NULL)", a, b, i, c), cnn);
+                    //MessageBox.Show(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i));
+                    cmd.ExecuteNonQuery();
+                    cnn.Close();
+                }  
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("loiaoi");
+                MessageBox.Show(e.ToString());
             }
         }
         public DataTable GetProduct()

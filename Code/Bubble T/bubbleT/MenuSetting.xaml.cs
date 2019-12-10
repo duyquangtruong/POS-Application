@@ -22,6 +22,7 @@ namespace bubbleT
     /// </summary>
     public partial class MenuSetting : Page
     {
+        private string productid; 
         public MenuSetting()
         {
             InitializeComponent();
@@ -41,27 +42,47 @@ namespace bubbleT
             NavigationService.GoBack();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+                productid = ((DataRowView)item.Content)["ProductID"].ToString();
+                t2.Text = ((DataRowView)item.Content)["ProductName"].ToString();
+                t3.Text = ((DataRowView)item.Content)["Price"].ToString();               
+            }
         }
-
-        private void List0_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void insertButton_Click(object sender, RoutedEventArgs e)
         {
             Dao cn = new Dao();
-            
-            if (cn.InsertProduct(t1.Text,t2.Text,t3.Text,c.IsChecked))
+            if(t1.Text == "")
             {
-                MessageBox.Show("ok!");
+                t1.Text = "not null !!!!!";
             }
-            else {
-                MessageBox.Show("error!");
+            else
+            {
+                cn.InsertProduct(t1.Text, t2.Text, t3.Text, c.IsChecked);
+                HienthiProduct();
             }
+        }
+
+        private void List0_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            Dao cn = new Dao();
+            cn.DeleteProduct(productid);
+            HienthiProduct();
+        }
+
+        private void updateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Dao cn = new Dao();
+            cn.UpdateProduct(productid, t2.Text, t3.Text, c.IsChecked);
+            HienthiProduct();
         }
     }
 }
