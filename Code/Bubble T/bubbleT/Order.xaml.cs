@@ -250,9 +250,9 @@ namespace bubbleT
             Listview.Items.Clear();
             foreach (var prd in Prd)
             {
-
                 Listview.Items.Add(prd);
             }
+            Listview.SelectedIndex = ORDER.positionSelected;
             if (Listview.Items.Count != 0)
                 if (ORDER.positionSelected > 0) Listview.ScrollIntoView(Listview.Items[ORDER.positionSelected]);
         }
@@ -291,7 +291,8 @@ namespace bubbleT
             {
                 sum += ORDER.List[i].itemsPrice;
             }
-            total.Content = Convert.ToString(sum);
+            total.Text = Convert.ToDecimal(sum).ToString("#,##0");
+            total.DataContext = sum;
         }
         private void P1_Click(object sender, RoutedEventArgs e)
         {
@@ -413,10 +414,6 @@ namespace bubbleT
                 sum();
             }
         }
-        private void Total_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var i = Listview.SelectedIndex;
@@ -426,10 +423,7 @@ namespace bubbleT
                 int tmp = ORDER.List[i].quantity;
                 ORDER.currentQuantity = tmp;
                 quantityP.Text = tmp.ToString();
-
-                quantityP.Focus();
-                quantityP.SelectionStart = 0;
-                quantityP.SelectionLength = quantityP.Text.Length;
+                Listview.SelectedIndex = i;
             }
 
         }
@@ -505,12 +499,12 @@ namespace bubbleT
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
             int newID=-1;
-            MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán\nTổng tiền:" + total.Content, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán thành công\nTổng tiền:" + total.Text, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
                 string desc = "";
                 int n = ORDER.List.Count;
-                desc = "Tổng:  " + total.Content.ToString() + "\n";
+                desc = "Tổng:  " + total.Text.ToString() + "\n";
                 for (int i = 0; i < n; i++)
                 {
                     desc = desc + ORDER.List[i].productName + " (SL:" + ORDER.List[i].quantity + "_Giá:" + ORDER.List[i].itemsPrice + ")" + Environment.NewLine;
@@ -527,10 +521,10 @@ namespace bubbleT
                     {
                         command.Parameters.AddWithValue("@DATE", DateTime.Now);
                         command.Parameters.AddWithValue("@CUS", "1");
-                        command.Parameters.AddWithValue("@TOTAL", total.Content.ToString());
+                        command.Parameters.AddWithValue("@TOTAL", total.DataContext.ToString());
 
                         connection.Open();
-                        newID = (Int32)command.ExecuteScalar();
+                        newID = (int)command.ExecuteScalar();
                         // Check Error
                         if (newID < 0)
                             Console.WriteLine("Error inserting data into Database!");

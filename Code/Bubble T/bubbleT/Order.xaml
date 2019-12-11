@@ -14,9 +14,12 @@
             <Button x:Name="g4" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="10,140,0,0" VerticalAlignment="Top" Width="188" Height="75" Click="G4_Click" FontSize="20" FontWeight="ExtraBold"/>
             <Button x:Name="g5" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="234,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G5_Click" FontSize="20" FontWeight="ExtraBold"/>
             <Button x:Name="g6" Content="" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="464,140,0,0" VerticalAlignment="Top" Width="191" Height="75" Click="G6_Click" FontSize="20" FontWeight="ExtraBold"/>
-            <Button Name="gNext" Content="next" HorizontalAlignment="Left" Margin="660,140,0,0" VerticalAlignment="Top" Width="50" Height="30" Click="GNext_Click"/>
-            <Button Name="gPrev" Content="prev" HorizontalAlignment="Left" Margin="660,80,0,0" VerticalAlignment="Top" Width="50" Height="30" Click="GPrev_Click"/>
-
+            <Button Name="gPrev" HorizontalAlignment="Left" Margin="660,140,0,0" VerticalAlignment="Top" Width="50" Height="30" Click="GPrev_Click" Background="FloralWhite">
+                <Image Source="images/Left-arrow.png" Width="47" Height="20"></Image>
+            </Button>
+            <Button Name="gNext"  Width="50" Height="30" Click="GNext_Click" Margin="660,80,570,610"  Background="FloralWhite">
+                <Image Source="images/Right-arrow.png" Width="47" Height="20"></Image>
+            </Button>
         </Grid>
         <Grid x:Name="product"  >
             <Button x:Name="p1"  Background="AliceBlue" HorizontalAlignment="Left" Margin="10,230,0,0" VerticalAlignment="Top" Width="187" Height="45" Click="P1_Click">
@@ -73,26 +76,42 @@
                     <TextBlock Name="priceP9" Width="183" Height="21" TextAlignment="Right"></TextBlock>
                 </StackPanel>
             </Button>
-            <Button Name="pPrev" Content="prev" HorizontalAlignment="Left" Margin="665,300,0,0" VerticalAlignment="Top" Width="40" Height="20" RenderTransformOrigin="0.5,0.5" Click="PPrev_Click"/>
-            <Button Name="pNext" Content="next" HorizontalAlignment="Left" Margin="665,325,0,0" VerticalAlignment="Top" Width="40" Height="25" RenderTransformOrigin="0.617,-0.2" Click="PNext_Click"/>
+            <Button Name="pNext"  HorizontalAlignment="Left" Margin="665,300,0,0" VerticalAlignment="Top" Width="40" Height="20" RenderTransformOrigin="0.5,0.5" Click="PNext_Click" Background="FloralWhite">
+                <Image Source="images/Right-arrow.png" Width="40" Height="15"></Image>
+            </Button>
+            <Button Name="pPrev" HorizontalAlignment="Left" Margin="665,325,0,0" VerticalAlignment="Top" Width="40" Height="25" RenderTransformOrigin="0.617,-0.2" Click="PPrev_Click" Background="FloralWhite">
+                <Image Source="images/Left-arrow.png" Width="40" Height="15"></Image>
+            </Button>
 
         </Grid>
-
         <ListView Name="Listview" HorizontalAlignment="Center" Height="340" Margin="716,36,10,0" VerticalAlignment="Top" Width="554" SelectionChanged="ListView_SelectionChanged">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
-                <GridView x:Name="gridviewItems">
+
+                <GridView x:Name="gridviewItems" >
+
                     <GridViewColumn Header="Mặt hàng"  Width="220" DisplayMemberBinding="{Binding productName}"/>
                     <GridViewColumn Header="SL" Width="50" DisplayMemberBinding="{Binding quantity}" />
                     <GridViewColumn Header="Giá" Width="100" DisplayMemberBinding="{Binding itemsPrice}" />
                     <GridViewColumn Header="Thời gian" Width="173" DisplayMemberBinding="{Binding Time}" />
                 </GridView>
             </ListView.View>
+
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="HỦY" Command="{Binding DeleteItems}" Click="MenuItem_Click"></MenuItem>
                     <MenuItem Header="HỦY TẤT CẢ" Command="{Binding DeleteFile}" Click="MenuItem_Click_1"></MenuItem>
                 </ContextMenu>
             </ListView.ContextMenu>
+            
         </ListView>
         <TextBlock HorizontalAlignment="Center" Margin="317,431,799,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="40" Width="164" FontSize="20" FontWeight="Black"><Run Text="MÓN PHỔ BIẾN"/><LineBreak/><Run/></TextBlock>
         <Grid x:Name="topProduct" Margin="0,10,0,-10"  >
@@ -130,7 +149,7 @@
         <Button Name="ESC"  FontSize="20" HorizontalAlignment="Left" Margin="68,580,0,0" VerticalAlignment="Top" Width="135" Height="80" Click="ESC_Click"  >
             <Image Source="images/btnExit.jpg" Width="135" Height="80"></Image>
         </Button>
-        <Button Name="Payment"  Margin="975,578,127,62" Height="80" FontSize="20" Click="Payment_Click" >
+        <Button Name="Payment"  Margin="975,578,127,62" Height="80" FontSize="20" Click="Payment_Click" Background="Transparent">
             <Image Source="images/btntt.jpg" Width="174" Height="80"></Image>
         </Button>
         <Grid  >
@@ -141,8 +160,8 @@
         </Grid>
         <Grid >
             <TextBlock HorizontalAlignment="Left" Margin="870,450,0,0" TextWrapping="Wrap" Text="TỔNG TIỀN:" VerticalAlignment="Top" Height="50" Width="185" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
-            <Border  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="50" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168"/>
-            <Button x:Name="total" Content="" Background="Transparent" HorizontalAlignment="Left" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168" Height="50" FontSize="24" FontWeight="Heavy" Click="Total_Click"/>
+            <Border  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="36" Margin="1095,450,0,0" VerticalAlignment="Top" Width="168"/>
+            <TextBlock x:Name="total" Text="" Background="Transparent" TextAlignment="Center" Margin="1096,450,16,0" VerticalAlignment="Top" Width="168" Height="36" FontSize="24" FontWeight="Heavy" />
         </Grid>
         <TextBlock Name="StartTime" HorizontalAlignment="Left" Margin="137,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"  Width="185" Height="20"/>
         <TextBlock HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Thời gian khởi tạo:" VerticalAlignment="Top" Width="120" FontWeight="Black"/>
