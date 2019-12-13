@@ -28,12 +28,13 @@ namespace bubbleT
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             //Selling selling = new Selling();
-            Option op = new Option();
             Dao cn = new Dao();
             string a = username.Text;
             string b = password.Password;
-            if (cn.GetLogin(a, b)){
-                this.NavigationService.Navigate(op);
+            int ID = cn.GetLogin(a, b);
+            if (ID != -1) {
+                Option op = new Option(ID);
+                this.NavigationService.Navigate(op,ID);
             }
             else
             {

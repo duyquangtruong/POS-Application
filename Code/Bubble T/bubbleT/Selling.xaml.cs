@@ -46,7 +46,7 @@ namespace bubbleT
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-            Option option = new Option();
+            Option option = new Option(0);
             NavigationService.Navigate(option);
         }
 

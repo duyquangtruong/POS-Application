@@ -28,3 +28,5 @@ C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\MenuSetting.baml
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\Order.g.cs
 C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\Order.baml
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\NewAccount.g.cs
+C:\Users\DELL\Documents\GitHub\Nhom18_TH_NMCNPM_17_33\Code\Bubble T\bubbleT\obj\Debug\NewAccount.baml

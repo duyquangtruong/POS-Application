@@ -20,7 +20,7 @@ namespace bubbleT
     /// </summary>
     public partial class Option : Page
     {
-        public Option()
+        public Option(int ID)
         {
             InitializeComponent();
         }

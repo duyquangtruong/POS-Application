@@ -21,32 +21,34 @@
             <Image Source="images/search.png"/>
         </Button>
         <Button Background="Green" Content="Thêm" FontSize=" 20" Height="47" Width="128" Canvas.Left="667" Canvas.Top="97"/>
-        <ListView HorizontalAlignment = "Left" Height = "453" Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149">
+        <ListView Name="lvAccount" HorizontalAlignment = "Left" Height = "453" 
+                  Margin = "49,188,0,0" VerticalAlignment = "Top" Width = "1149">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn Header = "Id" DisplayMemberBinding = "{Binding ID}" 
-                 Width="Auto" />
-
-                    <GridViewColumn Header = "Username" DisplayMemberBinding = "{Binding Username}" 
-                  Width = "auto"/>
-
-                    <GridViewColumn Header = "Password" DisplayMemberBinding = "{Binding Password}" 
-                  Width = "auto"/>
-
-                    <GridViewColumn Header = "Date" DisplayMemberBinding = "{Binding Date}" 
-                  Width = "auto"/>
-
+                <GridView x:Name="gridAccount">                    
+                    <GridViewColumn Header = "Id" DisplayMemberBinding = "{Binding Path=UserID}" 
+                                    Width="100" />
+                    <GridViewColumn Header = "Username" DisplayMemberBinding = "{Binding Path=UserName}" 
+                                    Width = "300"/>
+                    <GridViewColumn Header = "Password" DisplayMemberBinding = "{Binding Path=Password}" 
+                                    Width = "300"/>
+                    <GridViewColumn x:Name="clType" Header = "Type" DisplayMemberBinding = "{Binding Path=GroupID}"
+                                    Width="250"/>
+                    <GridViewColumn x:Name="clStatus" Header = "Status" DisplayMemberBinding = "{Binding Path=isActive}" 
+                                    Width = "200"/>                         
                 </GridView>
+                
             </ListView.View>
 
         </ListView>
         <TextBlock Canvas.Left="58" TextWrapping="Wrap" Text="Username" FontFamily="Arial" FontSize="20px" Canvas.Top="91" Height="19" Width="113"/>
-        <Button Background="#50E0A2" BorderThickness="0" Content="Thêm" FontSize="20px" Height="47" Width="128" Canvas.Left="667" Canvas.Top="97" Click="Button_Click">
+        <Button Background="#50E0A2" BorderThickness="0" Content="Thêm" FontSize="20px" 
+                Height="47" Width="128" Canvas.Left="667" Canvas.Top="97" 
+                Name="Add" Click="Add_Click">
             <Button.Effect>
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
             </Button.Effect>
         </Button>
-        <Button Background="#FC4F4F" BorderThickness="0" Content="Xóa" FontSize="20px" Height="47" Width="128" Canvas.Left="817" Canvas.Top="97">
+        <Button Name="btnDelete" Click="btnDelete_Click" Background="#FC4F4F" BorderThickness="0" Content="Xóa" FontSize="20px" Height="47" Width="128" Canvas.Left="817" Canvas.Top="97">
             <Button.Effect>
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
             </Button.Effect>
