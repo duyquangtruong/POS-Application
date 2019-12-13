@@ -15,7 +15,7 @@ namespace bubbleT
         public SqlConnection Connect()
         {
             Con = new SqlConnection();   //Khởi tạo đối tượng
-            string datasource = "LAPTOP-KIRKOR";
+            string datasource = ".";
 
             string database = "AppTraSua";
             Con.ConnectionString = @"Data Source=" + datasource + ";Initial Catalog="
@@ -48,8 +48,6 @@ namespace bubbleT
                 return -1;
             }
         }
-
-        public bool InsertProduct(string a, string b, string c, bool? d)
 
         public bool DeleteProduct(string id)
         {
@@ -86,11 +84,7 @@ namespace bubbleT
                 MessageBox.Show(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i));
                 DataSet dt = new DataSet();
                 da.Fill(dt);
-                da.Dispose();
-                else
-                {
-                    i = 0;
-                }
+                da.Dispose();             
                 SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", b), cnn);
                 cmd.ExecuteNonQuery();
                 SqlCommand cmd0 = new SqlCommand(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values(N'{0}',{1},{2},{3},0)", b, i, c, a), cnn);
@@ -237,11 +231,11 @@ namespace bubbleT
                 dataAdapter.Dispose();
                 return dataSet.Tables[0];
             }
-            catch(Exception e){
+            catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 return null;
             }
-
+        }
         public DataTable Gettype()
         {
             try

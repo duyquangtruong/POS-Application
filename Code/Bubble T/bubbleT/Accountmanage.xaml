@@ -53,7 +53,9 @@
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
             </Button.Effect>
         </Button>
-        <Button Background="#52C1FF" BorderThickness="0" Content="Sửa" FontSize="20px" Height="47" Width="128" Canvas.Left="1009" Canvas.Top="97">
+        <Button Name="btnEdit" Click="btnEdit_Click" Background="#52C1FF" 
+                BorderThickness="0" Content="Sửa" FontSize="20px" 
+                Height="47" Width="128" Canvas.Left="1009" Canvas.Top="97">
             <Button.Effect>
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1"/>
             </Button.Effect>

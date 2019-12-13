@@ -21,23 +21,17 @@ namespace bubbleT
     /// </summary>
     public partial class Accountmanage : Page
     {
-        public class lookupData
-        {
-            public string Status { get; set; }
-            public string Type { get; set; }
-        }
-
-        List<lookupData> lookup = new List<lookupData>();
-
-        public Accountmanage()
+        int userID;
+        public Accountmanage(int loginID)
         {
             InitializeComponent();
+            userID = loginID;
             Dao connection = new Dao();
             DataTable dataTable = connection.GetAccount();
             dataTable = dataTable.DefaultView.ToTable();
             dataTable.AcceptChanges();            
 
-            foreach (DataRow dr in dataTable.Rows) // search whole table
+            /*foreach (DataRow dr in dataTable.Rows) // search whole table
             {
                 if (dr[3].ToString() == "True") // if id==2
                 {
@@ -72,7 +66,7 @@ namespace bubbleT
                         lookup.Add(temp);
                     }
                 }
-            }           
+            }           */
             lvAccount.ItemsSource = dataTable.DefaultView;    
         }
 
@@ -91,20 +85,54 @@ namespace bubbleT
             dataTable.AcceptChanges();
             lvAccount.ItemsSource = dataTable.DefaultView;
         }
-
+        
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView index = lvAccount.SelectedItem;
-            
-            if (MessageBox.Show("Xóa người dùng đã chọn ?", "XÓA", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (lvAccount.SelectedItem == null)
             {
-                Dao connection = new Dao();
-                if (connection.DeleteAccount(5))
-                {
-                    MessageBox.Show("Xóa thành công!");
-                }
-                lvAccount.Items.Remove(lvAccount.SelectedItems);
+                return;
             }
+            var account = lvAccount.SelectedItem as DataRowView;
+            string test = account.Row.ItemArray[0].ToString();
+            int index = Int32.Parse(test);
+            if (index == userID)
+            {
+                MessageBox.Show("Không thể xóa tài khoản đang đăng nhập!");
+            }
+            else
+            {                
+                if (MessageBox.Show("Xóa người dùng đã chọn ?", "XÓA", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Dao connection = new Dao();
+                    if (connection.DeleteAccount(index))
+                    {
+                        MessageBox.Show("Xóa thành công!");
+                    }
+                    DataTable dataTable = connection.GetAccount();
+                    dataTable = dataTable.DefaultView.ToTable();
+                    dataTable.AcceptChanges();
+                    lvAccount.ItemsSource = dataTable.DefaultView;
+                }
+            }
+        }
+
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (lvAccount.SelectedItem == null)
+            {
+                return;
+            }
+            var account = lvAccount.SelectedItem as DataRowView;
+            string test = account.Row.ItemArray[0].ToString();
+            int index = Int32.Parse(test);
+            var editScreen = new EditAccount(index);
+            editScreen.ShowDialog();
+
+            Dao connection = new Dao();
+            DataTable dataTable = connection.GetAccount();
+            dataTable = dataTable.DefaultView.ToTable();
+            dataTable.AcceptChanges();
+            lvAccount.ItemsSource = dataTable.DefaultView;
         }
     }
 }

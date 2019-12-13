@@ -20,9 +20,11 @@ namespace bubbleT
     /// </summary>
     public partial class Option : Page
     {
-        public Option(int ID)
+        int userId;
+        public Option(int loginID)
         {
             InitializeComponent();
+            userId = loginID;
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
@@ -57,7 +59,7 @@ namespace bubbleT
 
         private void btnAccount_Click(object sender, RoutedEventArgs e)
         {
-            Accountmanage accountmanage = new Accountmanage();
+            Accountmanage accountmanage = new Accountmanage(userId);
             NavigationService.Navigate(accountmanage);
         }
 
