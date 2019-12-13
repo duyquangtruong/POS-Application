@@ -15,7 +15,7 @@ namespace bubbleT
         public SqlConnection Connect()
         {
             Con = new SqlConnection();   //Khởi tạo đối tượng
-            string datasource = ".";
+            string datasource = "LAPTOP-KIRKOR";
 
             string database = "AppTraSua";
             Con.ConnectionString = @"Data Source=" + datasource + ";Initial Catalog="
@@ -48,7 +48,28 @@ namespace bubbleT
                 return -1;
             }
         }
+
         public bool InsertProduct(string a, string b, string c, bool? d)
+
+        public bool DeleteProduct(string id)
+        {
+            try
+            {
+                SqlConnection cnn = Connect();
+                MessageBox.Show(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", id));
+                SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", id), cnn);
+                cmd.ExecuteNonQuery();
+                cnn.Close();
+                return true;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("loiaoi");
+                MessageBox.Show(e.ToString());
+                return false;
+            }
+        }
+        public bool UpdateProduct(int a, string b,string c,bool? d)
         {
             try
             {
@@ -66,6 +87,15 @@ namespace bubbleT
                 DataSet dt = new DataSet();
                 da.Fill(dt);
                 da.Dispose();
+                else
+                {
+                    i = 0;
+                }
+                SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", b), cnn);
+                cmd.ExecuteNonQuery();
+                SqlCommand cmd0 = new SqlCommand(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values(N'{0}',{1},{2},{3},0)", b, i, c, a), cnn);
+                cmd0.ExecuteNonQuery();
+
                 cnn.Close();
                 return true;
             }
@@ -76,12 +106,49 @@ namespace bubbleT
                 return false;
             }
         }
+        public void InsertProduct(int a, string b,string c,bool? d)
+        {
+            try
+            {               
+                SqlConnection cnn = Connect();
+                SqlDataAdapter da = new SqlDataAdapter(string.Format("select * from PRODUCT as p where p.ProductName = N'{0}'", b), cnn);
+                DataSet dt = new DataSet();
+                da.Fill(dt);
+                da.Dispose();                
+                if (dt.Tables[0].Rows.Count > 0)
+                {
+                    MessageBox.Show("Name invalid");
+                    cnn.Close();
+                }
+                else
+                {
+                    int i;
+                    if (d ?? true)
+                    {
+                        i = 1;
+                    }
+                    else
+                    {
+                        i = 0;
+                    }
+                    SqlCommand cmd = new SqlCommand(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values('{0}',{1},{2},{3},0)", b, i, c, a), cnn);
+                    MessageBox.Show(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values('{0}',{1},{2},{3},0)", b, i, c, a));
+                    cmd.ExecuteNonQuery();
+                    cnn.Close();
+                }  
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("loiaoi");
+                MessageBox.Show(e.ToString());
+            }
+        }
         public DataTable GetProduct()
         {
             try
             {
                 SqlConnection cnn = Connect();
-                SqlDataAdapter da = new SqlDataAdapter("select ProductID,ProductName,isActive,Price from PRODUCT", cnn);
+                SqlDataAdapter da = new SqlDataAdapter("select pt.Name,p.ProductName,p.Price,p.isActive,p.Popular from PRODUCT as p join PRO_TYPE as pt on p.ProTypeID = pt.ProTypeID", cnn);
                 DataSet dt = new DataSet();
                 da.Fill(dt);
                 da.Dispose();
@@ -110,6 +177,7 @@ namespace bubbleT
                 return null;
             }
         }
+
 
         public bool UsernameCheck(string username)
         {
@@ -169,6 +237,22 @@ namespace bubbleT
                 dataAdapter.Dispose();
                 return dataSet.Tables[0];
             }
+            catch(Exception e){
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+
+        public DataTable Gettype()
+        {
+            try
+            {
+                SqlConnection cnn = Connect();
+                SqlDataAdapter da = new SqlDataAdapter("select Name from PRO_TYPE", cnn);
+                DataSet dt = new DataSet();
+                da.Fill(dt);
+                da.Dispose();
+                return dt.Tables[0];
+            }
 
             catch (Exception e)
             {
@@ -176,6 +260,7 @@ namespace bubbleT
                 return null;
             }
         }
+
         public bool DeleteAccount(int ID)
         {
             try
@@ -193,5 +278,6 @@ namespace bubbleT
                 return false;
             }
         }
+
     }
 }

@@ -16,42 +16,55 @@
                 <Image Source="images/MenuButton.png"/>
             </Button>
         </Canvas>
-        <ListView Name="list0" Height="548" Canvas.Left="357" Canvas.Top="120" Width="887" FontFamily="Arial" FontSize="15px" SelectionChanged="List0_SelectionChanged">
+        <ListView Name="list0" Height="548" Canvas.Left="357" Canvas.Top="120" Width="887" FontFamily="Arial" FontSize="15px">
             <ListView.View>
                 <GridView x:Name="grid0">
-                    <GridViewColumn Header="ID" Width="100px" DisplayMemberBinding="{Binding Path=ProductID}" />
+                    <GridViewColumn Header="Type" Width="100px" DisplayMemberBinding="{Binding Path=Name}" />
                     <GridViewColumn Header="Tên" Width="300px" DisplayMemberBinding="{Binding Path=ProductName}"/>
                     <GridViewColumn Header="Giá" Width="200px" DisplayMemberBinding="{Binding Path=Price}"/>
                     <GridViewColumn Header="Trạng Thái" Width="250px" DisplayMemberBinding="{Binding Path=isActive}"/>
+                    <GridViewColumn Header="Popular" Width="200px" DisplayMemberBinding="{Binding Path=Popular}"/>
                 </GridView>
             </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
         <Border BorderBrush="Black" BorderThickness="1" Height="448" Canvas.Left="26" Canvas.Top="120" Width="304">
             <Canvas>
-                <TextBox Name="t2" FontFamily="Arial" FontSize="15px" Padding="4px" Height="26" Canvas.Left="25" TextWrapping="Wrap" Canvas.Top="114" Width="246" TextChanged="TextBox_TextChanged"/>
+                <TextBox Name="t2" FontFamily="Arial" FontSize="15px" Padding="4px" Height="26" Canvas.Left="25" TextWrapping="Wrap" Canvas.Top="114" Width="246"/>
                 <TextBox Name="t3" FontFamily="Arial" FontSize="15px" Padding="4px" Height="26" Canvas.Left="25" TextWrapping="Wrap" Canvas.Top="186" Width="246"/>
-                <TextBox Name="t1" FontFamily="Arial" FontSize="15px" Padding="4px" Height="26" TextWrapping="Wrap" Width="246" Canvas.Left="25" Canvas.Top="50"/>
+
                 <CheckBox Name="c" FontFamily="Arial" FontSize="15px" Padding="4px" Content="Đang được bán" Canvas.Left="25" 
                           VerticalContentAlignment="Center" Canvas.Top="235" Height="30"/>
-                <TextBlock  FontFamily="Arial" FontSize="15px" Canvas.Left="25" TextWrapping="Wrap" Text="ID" Canvas.Top="29"/>
+                <TextBlock  FontFamily="Arial" FontSize="15px" Canvas.Left="25" TextWrapping="Wrap" Text="Type" Canvas.Top="29"/>
                 <TextBlock  FontFamily="Arial" FontSize="15px" Canvas.Left="25" TextWrapping="Wrap" Text="Tên" Canvas.Top="93"/>
                 <TextBlock  FontFamily="Arial" FontSize="15px" Canvas.Left="25" TextWrapping="Wrap" Text="Giá bán" Canvas.Top="165"/>
+                <ComboBox Name="list1" Height="31" Canvas.Left="28" Canvas.Top="57" Width="243" DisplayMemberPath="Name"/>
             </Canvas>
         </Border>
-        <Button FontFamily="Arial" FontSize="15px" Content="Thêm"
+        <Button Click="insertButton_Click" FontFamily="Arial" FontSize="15px" Content="Thêm"
                 BorderThickness="0" Background="#00C654"
-                Canvas.Left="77" Canvas.Top="403" Width="85" Height="29" Click="Button_Click">
+                Canvas.Left="77" Canvas.Top="403" Width="85" Height="29" >
             <Button.Effect>
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1" />
             </Button.Effect>
         </Button>
         <Button FontFamily="Arial" FontSize="15px" Content="Sửa"
                 BorderThickness="0" Background="#f6c35a"
-                Canvas.Left="189" Canvas.Top="403" Width="84" Height="29">
+                Canvas.Left="189" Canvas.Top="403" Width="84" Height="29" Click="updateButton_Click">
             <Button.Effect>
                 <DropShadowEffect BlurRadius="4" ShadowDepth="1" />
             </Button.Effect>
         </Button>
-
+        <Button FontFamily="Arial" FontSize="15px" Content="Delete"
+                BorderThickness="0" Background="#00C654"
+                Canvas.Left="77" Canvas.Top="471" Width="85" Height="29" Click="deleteButton_Click" RenderTransformOrigin="0.469,3.242">
+            <Button.Effect>
+                <DropShadowEffect BlurRadius="4" ShadowDepth="1" />
+            </Button.Effect>
+        </Button>
     </Canvas>
 </Page>
