@@ -35,7 +35,11 @@ namespace bubbleT
             dt = dt.DefaultView.ToTable();
             dt.AcceptChanges();
             list0.ItemsSource = dt.DefaultView;
-            
+            DataTable dt1 = cn.Gettype();
+            dt1 = dt1.DefaultView.ToTable();
+            dt1.AcceptChanges();
+            list1.ItemsSource = dt1.DefaultView;
+            list1.SelectedIndex = 1;
         }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
@@ -47,23 +51,16 @@ namespace bubbleT
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-                productid = ((DataRowView)item.Content)["ProductID"].ToString();
                 t2.Text = ((DataRowView)item.Content)["ProductName"].ToString();
-                t3.Text = ((DataRowView)item.Content)["Price"].ToString();               
+                t3.Text = ((DataRowView)item.Content)["Price"].ToString();
+                list1.Text = ((DataRowView)item.Content)["Name"].ToString();               
             }
         }
         private void insertButton_Click(object sender, RoutedEventArgs e)
         {
             Dao cn = new Dao();
-            if(t1.Text == "")
-            {
-                t1.Text = "not null !!!!!";
-            }
-            else
-            {
-                cn.InsertProduct(t1.Text, t2.Text, t3.Text, c.IsChecked);
-                HienthiProduct();
-            }
+            cn.InsertProduct(list1.SelectedIndex + 1, t2.Text, t3.Text, c.IsChecked);
+            HienthiProduct();
         }
 
         private void List0_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -74,14 +71,14 @@ namespace bubbleT
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             Dao cn = new Dao();
-            cn.DeleteProduct(productid);
+            cn.DeleteProduct(t2.Text);
             HienthiProduct();
         }
 
         private void updateButton_Click(object sender, RoutedEventArgs e)
         {
             Dao cn = new Dao();
-            cn.UpdateProduct(productid, t2.Text, t3.Text, c.IsChecked);
+            cn.UpdateProduct(list1.SelectedIndex + 1, t2.Text, t3.Text, c.IsChecked);
             HienthiProduct();
         }
     }
