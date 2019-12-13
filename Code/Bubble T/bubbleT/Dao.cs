@@ -54,7 +54,7 @@ namespace bubbleT
             try
             {
                 SqlConnection cnn = Connect();
-                MessageBox.Show(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", id));
+                //MessageBox.Show(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", id));
                 SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", id), cnn);
                 cmd.ExecuteNonQuery();
                 cnn.Close();
@@ -79,12 +79,7 @@ namespace bubbleT
                 }
                 else {
                     i = 0;
-                }
-                SqlDataAdapter da = new SqlDataAdapter(string.Format("insert into PRODUCT values({0},'{1}',{2},{3},6,NULL)", a, b, i, c), cnn);
-                MessageBox.Show(string.Format("insert into PRODUCT values({0},'{1}',{3},{2},6,NULL)", a, b, c, i));
-                DataSet dt = new DataSet();
-                da.Fill(dt);
-                da.Dispose();             
+                }                             
                 SqlCommand cmd = new SqlCommand(string.Format("delete from PRODUCT where PRODUCT.ProductName = N'{0}'", b), cnn);
                 cmd.ExecuteNonQuery();
                 SqlCommand cmd0 = new SqlCommand(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values(N'{0}',{1},{2},{3},0)", b, i, c, a), cnn);
@@ -126,7 +121,7 @@ namespace bubbleT
                         i = 0;
                     }
                     SqlCommand cmd = new SqlCommand(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values('{0}',{1},{2},{3},0)", b, i, c, a), cnn);
-                    MessageBox.Show(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values('{0}',{1},{2},{3},0)", b, i, c, a));
+                    //MessageBox.Show(string.Format("insert into PRODUCT(ProductName,isActive,Price,ProTypeID,Popular) values('{0}',{1},{2},{3},0)", b, i, c, a));
                     cmd.ExecuteNonQuery();
                     cnn.Close();
                 }  
@@ -273,23 +268,5 @@ namespace bubbleT
             }
         }
 
-        public DataTable GetReport()
-        {
-            try
-            {
-                SqlConnection connection = Connect();
-                SqlDataAdapter dataAdapter = new SqlDataAdapter("select ProductName, SUM(BDQuantity) as Quantity, BDTotalAmount, SUM(BDTotalAmount) as TotalSelling from BILLDETAIL group by ProductName, BDTotalAmount", connection);
-                DataSet dataSet = new DataSet();
-                dataAdapter.Fill(dataSet);
-                dataAdapter.Dispose();
-                return dataSet.Tables[0];
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-                return null;
-            }       
-
-        }
     }
 }
