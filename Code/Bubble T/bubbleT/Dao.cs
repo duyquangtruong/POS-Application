@@ -273,5 +273,23 @@ namespace bubbleT
             }
         }
 
+        public DataTable GetReport()
+        {
+            try
+            {
+                SqlConnection connection = Connect();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter("select ProductName, SUM(BDQuantity) as Quantity, BDTotalAmount, SUM(BDTotalAmount) as TotalSelling from BILLDETAIL group by ProductName, BDTotalAmount", connection);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                dataAdapter.Dispose();
+                return dataSet.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }       
+
+        }
     }
 }

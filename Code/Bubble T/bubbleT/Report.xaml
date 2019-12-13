@@ -21,13 +21,13 @@
         <Button Content="Xem" FontFamily="Arial" FontSize="25px" Padding="5px" 
                 Canvas.Left="568" Canvas.Top="114" Width="168" 
                 BorderThickness="0" Background="AntiqueWhite"/>
-        <ListView Height="534" Canvas.Left="48" Canvas.Top="176" Width="1176" FontSize="15px" FontFamily="Arial">
+        <ListView Name="lvReport" Height="386" Canvas.Left="48" Canvas.Top="176" Width="1176" FontSize="15px" FontFamily="Arial">
             <ListView.View>                
                 <GridView>
-                    <GridViewColumn Header="Tên mặt hàng" Width="400px"/>
-                    <GridViewColumn Header="Số lượng" Width="200px"/>
-                    <GridViewColumn Header="Đơn giá" Width="300px"/>
-                    <GridViewColumn Header="Tổng Tiền" Width="280px"/>
+                    <GridViewColumn Header="Tên mặt hàng" Width="400px" DisplayMemberBinding="{Binding Path=ProductName}"/>
+                    <GridViewColumn Header="Số lượng" Width="200px" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                    <GridViewColumn Header="Đơn giá" Width="300px" DisplayMemberBinding="{Binding Path=BDTotalAmount}"/>
+                    <GridViewColumn Header="Tổng Tiền" Width="280px" DisplayMemberBinding="{Binding Path=TotalSelling}"/>
                 </GridView>
             </ListView.View>
         </ListView>

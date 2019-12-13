@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace bubbleT
 {
@@ -22,7 +24,12 @@ namespace bubbleT
     {
         public Report()
         {
-            InitializeComponent();           
+            InitializeComponent();
+            Dao connection = new Dao();
+            DataTable dataTable = connection.GetReport();
+            dataTable = dataTable.DefaultView.ToTable();
+            dataTable.AcceptChanges();
+            lvReport.ItemsSource = dataTable.DefaultView;
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
