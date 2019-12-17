@@ -16,20 +16,26 @@
                 <Image Source="images/MenuButton.png"/>
             </Button>
         </Canvas>
-        <DatePicker FontSize="17px" Canvas.Left="100" Canvas.Top="111" Height="42" Width="162"/>
-        <DatePicker FontSize="17px" Canvas.Left="360" Canvas.Top="111" Height="42" Width="158"/>
-        <Button Content="Xem" FontFamily="Arial" FontSize="25px" Padding="5px" 
-                Canvas.Left="568" Canvas.Top="114" Width="168" 
-                BorderThickness="0" Background="AntiqueWhite"/>
-        <ListView Name="lvReport" Height="386" Canvas.Left="48" Canvas.Top="176" Width="1176" FontSize="15px" FontFamily="Arial">
-            <ListView.View>                
-                <GridView>
-                    <GridViewColumn Header="Tên mặt hàng" Width="400px" DisplayMemberBinding="{Binding Path=ProductName}"/>
-                    <GridViewColumn Header="Số lượng" Width="200px" DisplayMemberBinding="{Binding Path=Quantity}"/>
-                    <GridViewColumn Header="Đơn giá" Width="300px" DisplayMemberBinding="{Binding Path=BDTotalAmount}"/>
-                    <GridViewColumn Header="Tổng Tiền" Width="280px" DisplayMemberBinding="{Binding Path=TotalSelling}"/>
+
+        <ListView Name="listview" Height="463" Canvas.Left="212" Canvas.Top="162" Width="1012" FontSize="15px" FontFamily="Arial">
+            <ListView.View>
+
+                <GridView >
+                    <GridViewColumn Header="Mặt hàng"  Width="300" DisplayMemberBinding="{Binding productNameR}"/>
+                    <GridViewColumn Header="Khu"  Width="150" DisplayMemberBinding="{Binding CusTypeR}"/>
+                    <GridViewColumn Header="SL" Width="50" DisplayMemberBinding="{Binding quantityR}" />
+                    <GridViewColumn Header="Đơn giá" Width="200" DisplayMemberBinding="{Binding priceR}" />
+                    <GridViewColumn Header="Tổng tiền" Width="330" DisplayMemberBinding="{Binding totalR}" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <Grid x:Name="p1">
+            <TextBlock Name="tb1" Canvas.Left="99" TextWrapping="Wrap" Text="TỪ" Canvas.Top="167" Height="22" RenderTransformOrigin="-0.012,3.526" VerticalAlignment="Top" Margin="84,193,50,-173"/>
+            <TextBlock Name="tb2" Canvas.Left="99" TextWrapping="Wrap" Text="ĐẾN" Canvas.Top="268" Height="26" Width="28" RenderTransformOrigin="-0.487,3.397" Margin="84,290,50,-274"/>
+            <DatePicker Name="Date1" FontSize="17px" Canvas.Left="27" Canvas.Top="198" Height="42" Width="162" Margin="14,215,-14,-215"/>
+            <DatePicker Name="Date2" FontSize="17px" Canvas.Left="31" Canvas.Top="299" Height="42" Width="158" Margin="14,321,-10,-321"/>
+            <Button Name="search" Click="Search_Click" Content="XEM" Canvas.Left="77" Canvas.Top="381" RenderTransformOrigin="-0.098,0.533" Margin="61,395,33,-394"/>
+        </Grid>
+        <Button Name="TN" Content="BÁO CÁO DOANH THU" Canvas.Top="69" Width="1270" Height="52" Background="AntiqueWhite" Click="TN_Click" FontSize="30" FontFamily="Arial" FontWeight="Bold"/>
     </Canvas>
 </Page>

@@ -29,44 +29,7 @@ namespace bubbleT
             Dao connection = new Dao();
             DataTable dataTable = connection.GetAccount();
             dataTable = dataTable.DefaultView.ToTable();
-            dataTable.AcceptChanges();            
-
-            /*foreach (DataRow dr in dataTable.Rows) // search whole table
-            {
-                if (dr[3].ToString() == "True") // if id==2
-                {
-                    if (dr[4].ToString() == "2")
-                    {
-                        lookupData temp = new lookupData();
-                        temp.Status = "Enable";
-                        temp.Type = "Thu Ngân";
-                        lookup.Add(temp);
-                    }
-                    else
-                    {
-                        lookupData temp = new lookupData();
-                        temp.Status = "Enable";
-                        temp.Type = "Quản Lý";
-                        lookup.Add(temp);
-                    }                    
-                }
-                else {
-                    if (dr[4].ToString() == "2")
-                    {
-                        lookupData temp = new lookupData();
-                        temp.Status = "Disable";
-                        temp.Type = "Thu Ngân";
-                        lookup.Add(temp);
-                    }
-                    else
-                    {
-                        lookupData temp = new lookupData();
-                        temp.Status = "Disable";
-                        temp.Type = "Quản Lý";
-                        lookup.Add(temp);
-                    }
-                }
-            }           */
+            dataTable.AcceptChanges();           
             lvAccount.ItemsSource = dataTable.DefaultView;    
         }
 
@@ -133,6 +96,17 @@ namespace bubbleT
             dataTable = dataTable.DefaultView.ToTable();
             dataTable.AcceptChanges();
             lvAccount.ItemsSource = dataTable.DefaultView;
+        }
+
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string username = userSearch.Text.ToString();
+            Dao connection = new Dao();
+            DataTable dataTable = connection.SearchUser(username);
+            dataTable = dataTable.DefaultView.ToTable();
+            dataTable.AcceptChanges();
+            lvAccount.ItemsSource = dataTable.DefaultView;
+
         }
     }
 }

@@ -22,9 +22,15 @@
 
         </Canvas>
         <ListView Name="Listview" Height="625" Canvas.Left="10" Canvas.Top="85" Width="1260" FontFamily="Arial" FontSize="27"  >
+            <ListView.Resources>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
                 </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Mã Phiếu" Width="400" DisplayMemberBinding="{Binding ID}" />
@@ -36,11 +42,11 @@
                 <ContextMenu>
                     <MenuItem Header="XEM CHI TIẾT" Click="MenuItem_Click"></MenuItem>
                     <MenuItem Header="KẾT THÚC" Click="MenuItem_Click_1"></MenuItem>
-                 
+
                 </ContextMenu>
-                
+
             </ListView.ContextMenu>
-          
+
         </ListView>
     </Canvas>
 </Page>

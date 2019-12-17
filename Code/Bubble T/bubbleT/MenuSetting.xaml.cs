@@ -22,7 +22,7 @@ namespace bubbleT
     /// </summary>
     public partial class MenuSetting : Page
     {
-        private string productid; 
+
         public MenuSetting()
         {
             InitializeComponent();

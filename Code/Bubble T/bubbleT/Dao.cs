@@ -49,6 +49,11 @@ namespace bubbleT
             }
         }
 
+        internal DataTable GetReport()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool DeleteProduct(string id)
         {
             try
@@ -268,5 +273,23 @@ namespace bubbleT
             }
         }
 
+        public DataTable SearchUser(string username)
+        {
+            try
+            {
+                
+                SqlConnection connection = Connect();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(string.Format("select * from [USER] where UserName='{0}'", username), connection);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                dataAdapter.Dispose();
+                return dataSet.Tables[0];
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
+        }
     }
 }

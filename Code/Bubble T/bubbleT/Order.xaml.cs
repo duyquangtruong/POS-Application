@@ -16,6 +16,8 @@ namespace bubbleT
         {
             private static List<pOrder> list = new List<pOrder>();
             private static List<pType> type = new List<pType>();
+            //phan loai khu 
+            public static int cusType = 0;
             //số lượng hiện tại 1 món đang order
             public static int currentQuantity = 1;
             //vị trí món order được lựa chọn
@@ -30,10 +32,11 @@ namespace bubbleT
             internal static List<pType> Type { get => type; set => type = value; }
         }
 
-        public Order()
+        public Order(int v)
         {
 
             InitializeComponent();
+            ORDER.cusType = v;
             StartTime.Text = DateTime.Now.ToString();
             LoadMenu();
             if (ORDER.Type.Count > 0) groupClick(g1, 0);
@@ -111,27 +114,27 @@ namespace bubbleT
                 List<TextBlock> priceP = new List<TextBlock> { priceTP1, priceTP2, priceTP3, priceTP4, priceTP5 };
                 int k = 0;
                 using (SqlCommand command = new SqlCommand("exec sp_GetPopularProduct", connection))
-                { 
-                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    if (reader != null)
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        while (reader.Read())
+                        if (reader != null)
                         {
-                            bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
-                            if (isActive)
+                            while (reader.Read())
                             {
-                                int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
-                                String PrdName = reader["ProductName"].ToString();
-                                int Price = Convert.ToInt32(reader["Price"].ToString());
-                                nameP[k].DataContext = ProductID;
-                                nameP[k].Text = PrdName;
-                                priceP[k].Text = Price.ToString();
-                            }
+                                bool isActive = Convert.ToBoolean(reader["isActive"].ToString());
+                                if (isActive)
+                                {
+                                    int ProductID = Convert.ToInt32(reader["ProductID"].ToString());
+                                    String PrdName = reader["ProductName"].ToString();
+                                    int Price = Convert.ToInt32(reader["Price"].ToString());
+                                    nameP[k].DataContext = ProductID;
+                                    nameP[k].Text = PrdName;
+                                    priceP[k].Text = Price.ToString();
+                                }
                                 k += 1;
+                            }
                         }
                     }
-                }
                 }
             }
             ShowGroupName();
@@ -145,7 +148,7 @@ namespace bubbleT
                 List<int> lprice = ORDER.Type[index].getListPrice();
                 List<int> lID = ORDER.Type[index].getListID();
                 int n = lname.Count;
-                List<TextBlock> nameP = new List<TextBlock> { nameP1, nameP2, nameP3, nameP4, nameP5, nameP6, nameP7, nameP8, nameP9,          };
+                List<TextBlock> nameP = new List<TextBlock> { nameP1, nameP2, nameP3, nameP4, nameP5, nameP6, nameP7, nameP8, nameP9, };
                 List<TextBlock> priceP = new List<TextBlock> { priceP1, priceP2, priceP3, priceP4, priceP5, priceP6, priceP7, priceP8, priceP9, priceTP1, priceTP2, priceTP3, priceTP4, priceTP5 };
                 for (int i = 0; i < 9; i++)
                 {
@@ -263,8 +266,8 @@ namespace bubbleT
                 ORDER.currentQuantity = 1;
 
                 //ADD to list prd
-                int id = (int)nameP.DataContext ;
-                ORDER.List.Add(new pOrder(id,nameP.Text, 1, Convert.ToInt32(priceP.Text), DateTime.Now));
+                int id = (int)nameP.DataContext;
+                ORDER.List.Add(new pOrder(id, nameP.Text, 1, Convert.ToInt32(priceP.Text), DateTime.Now));
                 ORDER.positionSelected = ORDER.List.Count - 1;
                 quantityP.Text = "1";
 
@@ -498,7 +501,7 @@ namespace bubbleT
 
         private void Payment_Click(object sender, RoutedEventArgs e)
         {
-            int newID=-1;
+            int newID = -1;
             MessageBoxResult result = MessageBox.Show("Xác nhận thanh toán thành công\nTổng tiền:" + total.Text, "Thông báo", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
@@ -513,14 +516,14 @@ namespace bubbleT
 
                 using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
                 {
-                   
+
                     String query1 = "INSERT INTO dbo.BILL (Date,IsOver,CusTypeID,TotalAmount) VALUES (@DATE,0,@CUS, @TOTAL)"
-                        + "SELECT CAST(scope_identity() AS int)"; ;
+                        + "SELECT CAST(scope_identity() AS int)";
                     String query2 = "INSERT INTO dbo.BILLDETAIL (BillID,ProductID,ProductName,BDquantity,BDTotalAmount) VALUES (@NewID,@prdID,@prdName, @quantity,@total)";
                     using (SqlCommand command = new SqlCommand(query1, connection))
                     {
                         command.Parameters.AddWithValue("@DATE", DateTime.Now);
-                        command.Parameters.AddWithValue("@CUS", "1");
+                        command.Parameters.AddWithValue("@CUS", ORDER.cusType);
                         command.Parameters.AddWithValue("@TOTAL", total.DataContext.ToString());
 
                         connection.Open();
@@ -551,10 +554,10 @@ namespace bubbleT
                     }
                 }
 
+                if (ORDER.cusType == 1) { var selling = new Selling(this, desc, newID); ResetDataOrder(); NavigationService.Navigate(selling); }
+                else { var delivery = new Delivery(this, desc, newID); ResetDataOrder(); NavigationService.Navigate(delivery); }
 
-                var selling = new Selling(this, desc,newID);
-                ResetDataOrder();
-                NavigationService.Navigate(selling);
+
             }
         }
 

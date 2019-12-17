@@ -16,8 +16,8 @@
                 <Image Source="images/MenuButton.png"/>
             </Button>
         </Canvas>
-        <TextBox x:Name="UserTextBox" TextWrapping="Wrap" FontSize="15px" FontFamily="Arial" Height="29" Width="218" Canvas.Left="58" Canvas.Top="115"/>
-        <Button Background="White" BorderThickness="0" Height="40px" Width="40px" Canvas.Left="310" Canvas.Top="104">
+        <TextBox Name="userSearch" TextWrapping="Wrap" FontSize="15px" FontFamily="Arial" Height="29" Width="218" Canvas.Left="58" Canvas.Top="115"/>
+        <Button Name="btnSearch" Click="BtnSearch_Click" Background="White" BorderThickness="0" Height="40px" Width="40px" Canvas.Left="310" Canvas.Top="104">
             <Image Source="images/search.png"/>
         </Button>
         <Button Background="Green" Content="Thêm" FontSize=" 20" Height="47" Width="128" Canvas.Left="667" Canvas.Top="97"/>

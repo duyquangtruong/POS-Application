@@ -8,13 +8,44 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       Title="Delivery">
     <Canvas Background="White">
-        <Canvas Background="#252A37" Width="1280px" Height="90">
-            <TextBlock Text="Delivery" FontFamily="Arial" FontSize="40px"
-                       Foreground="White" Canvas.Left="35" Canvas.Top="24"
-                       />
-            <Button Name="Menu" Click="Menu_Click" Background="#252A37" BorderThickness="0" Height="60" Width="60" Canvas.Left="1168" Canvas.Top="20">
-                <Image Source="images/MenuButton.png"/>
+        <Canvas Background="#252A37" Width="1280px" Height="80px">
+            <TextBlock Text="DELIVERY" FontFamily="Arial" FontSize="40px"
+                       Foreground="White" Canvas.Left="37" Canvas.Top="19"/>
+            <Button Name="btnAdd" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1042" Canvas.Top="6"
+                    Click="btnAdd_Click">
+                <Image Source="images/add.png" Height="60" Width="60"/>
             </Button>
+            <Button Name="Menu" Click="Menu_Click" BorderThickness="0" Background="#252A37" Height="70" Width="70" Canvas.Left="1154" Canvas.Top="6">
+                <Image Source="images/MenuButton.png" Canvas.Left="1165" Canvas.Top="6" Height="60" Width="60"/>
+            </Button>
+
         </Canvas>
+        <ListView Name="Listview" Height="625" Canvas.Left="10" Canvas.Top="85" Width="1260" FontFamily="Arial" FontSize="27"  >
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Mã Phiếu" Width="400" DisplayMemberBinding="{Binding ID}" />
+                    <GridViewColumn Header="Thời gian" Width="400" DisplayMemberBinding="{Binding Time}" />
+                    <GridViewColumn Header="Tổng tiền" Width="500" DisplayMemberBinding="{Binding Total}" />
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="XEM CHI TIẾT" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="KẾT THÚC" Click="MenuItem_Click_1"></MenuItem>
+
+                </ContextMenu>
+
+            </ListView.ContextMenu>
+
+        </ListView>
     </Canvas>
 </Page>

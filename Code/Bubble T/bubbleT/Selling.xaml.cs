@@ -52,7 +52,7 @@ namespace bubbleT
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Order order = new Order();
+            Order order = new Order(1);
             NavigationService.Navigate(order);
         }
 
@@ -100,7 +100,7 @@ namespace bubbleT
             int count = 0;
             using (SqlConnection connection = new SqlConnection("Data Source=.;Initial Catalog=AppTraSua;Integrated Security=True"))
             {
-                using (SqlCommand command = new SqlCommand("select COUNT(*) from BILL where IsOver=0", connection))
+                using (SqlCommand command = new SqlCommand("select COUNT(*) from BILL where CusTypeID=1 and  IsOver=0", connection))
                 {
                     connection.Open();
                     count = (Int32)command.ExecuteScalar();
@@ -109,7 +109,7 @@ namespace bubbleT
                 {
                     List<int> idTmp = new List<int>();
                     string desc = "Tổng tiền: ";
-                    using (SqlCommand command = new SqlCommand("select BillID,TotalAmount,Date from BILL  where IsOver=0", connection))
+                    using (SqlCommand command = new SqlCommand("select BillID,TotalAmount,Date from BILL  where CusTypeID=1 and   IsOver=0", connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -122,7 +122,7 @@ namespace bubbleT
                                     String time = reader["Date"].ToString();
                                     SELLING.List.Add(new SellingListView(id, Convert.ToDecimal(total).ToString("#,##0"), time));
                                     idTmp.Add(id);
-                                    desc = desc + total+'\n';
+                                    desc = desc + total + '\n';
                                     SELLING.Description.Add(desc);
                                     desc = "Tổng tiền: ";
                                 }
